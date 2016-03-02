@@ -9,10 +9,11 @@ void tabn::add_elem_last(int elem) {
 		 	cout << 't' << endl;
 		 	for (int i=0; i<=(size-1); i++) {
 		 		nowy[i] = tab[i];
+		 		
 		 	}
 		 	//cout << "Skopiowano" <<endl;
 		 	
-		 	nowy[size+1] = elem;
+		 	nowy[size] = elem;
 		 	size++;
 		 	//cout << "size " << size << endl;
 		 	delete [] tab;
