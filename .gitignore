@@ -3,3 +3,4 @@ obj/
 tabl
 *.o
 core
+.gitignore

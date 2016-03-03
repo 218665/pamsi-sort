@@ -21,5 +21,8 @@ public:
 	
 	void add_elem_last(int);
 	void show_elems(void);
+	int tabl_size(void) {
+		return size;
+	}
 };
 #endif

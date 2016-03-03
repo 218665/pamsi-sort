@@ -1,4 +1,5 @@
 #include <iostream>
+//#include <fstream>
 #include "../inc/tabl.hh"
 #include "../inc/main.hh"
 using namespace std;
@@ -7,28 +8,20 @@ using namespace std;
 int main (void) {
 	
 	tabn tablica_dynamiczna;
-	char selection = 'a';
+	int liczba = 0;
 	
-	while (selection != 'q') {
-		cin >> selection;
-		switch (selection) {
-			case 'a':
-				int nowy_elem;
-				cin >> nowy_elem;
-				if (cin.fail()) {
-						cin.clear();
-						cin.ignore(10000, '\n');
-						//cout << "! Wrong input!" << endl;
-					}
-				else tablica_dynamiczna.add_elem_last(nowy_elem);
-				break;
-			case 's':
-				tablica_dynamiczna.show_elems();
-				break;
-			case 'q':
-				break;
-			default :
-				break;
+//	cin >> liczba;
+	while (!cin.eof()) {
+		cin >> liczba;
+		if (cin.fail()) {
+			cin.clear();
+			cin.ignore(10000, '\n');
+		}
+		else {
+			tablica_dynamiczna.add_elem_last(liczba);
 			}
 	}
+//	Usunąć przed sprawdzaniem dla >10
+//	tablica_dynamiczna.show_elems();
+	cout << "SIZE: " << tablica_dynamiczna.tabl_size() << endl;
 }

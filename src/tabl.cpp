@@ -16,9 +16,10 @@ void tabn::add_elem_last(int elem) {
 		 }
 	}
 	
-	void tabn::show_elems (void) {
+void tabn::show_elems (void) {
 		for (int i=0; i<size; i++) {
 			cout << tab[i] << " ";
 		}
 		cout << endl;
 	}
+	
