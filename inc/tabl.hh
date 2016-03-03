@@ -16,7 +16,7 @@ public:
 		tab = new int[SIZE];
 	}
 	~tabn() {
-		//delete [] tab;
+		delete [] tab;
 	}
 	
 	void add_elem_last(int);
