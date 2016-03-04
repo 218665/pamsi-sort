@@ -6,6 +6,23 @@
 
 using namespace std;
 
+/*
+ * Klasa tabn
+ *
+ * Przechowuje elementy w rozszerzalnej tablicy o rozmiarze początkowym SIZE
+ *
+ * Pola:
+ * * tab:  wskaźnik na tablicę
+ * * size: aktualny rozmiar tablicy
+ *
+ * Metody:
+ * * tabn:          konstruktor
+ * * ~tabn:	        destruktor
+ * * add_elem_last: rozszerza listę o 1 jeśli ilość elementów ma przekroczyć SIZE
+ * * show_elems:    wyświetla listę elementów (przydatne do debugowania)
+ * * tabl_size:     zwraca liczbę elementów w tablicy (przydatne do debugowania)
+ */
+ 
 class tabn {
 private:
 	int* tab;

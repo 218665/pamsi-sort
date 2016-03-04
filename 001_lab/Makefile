@@ -9,6 +9,6 @@ obj:
 
 obj/tabl.o: src/tabl.cpp inc/tabl.hh
 	$(G) $(GFLAGS) -c ./src/tabl.cpp -o ./obj/tabl.o
-
+	
 clean:
 	rm -fr ./obj/*.o tabl
