@@ -26,10 +26,12 @@ int main (void) {
 		cin >> liczba;
 		if (cin.fail()) {
 			cin.clear();
-			cin.ignore(10000, '\n');
+			cin.ignore(1000000000, '\n');
 		}
 		else {
-			tablica_dynamiczna.add_elem_last(liczba);
+			tablica_dynamiczna.addElemLast(liczba);
+			//tablica_dynamiczna.addElemDoubleTabl(liczba);
+			//tablica_dynamiczna.addElem1Tabl5(liczba);
 			}
 	}
 	
@@ -37,11 +39,13 @@ int main (void) {
 	end = chrono::high_resolution_clock::now();
 	
 	// Czas trwania
-	chrono::duration<double> work_time = end - begin;
+	chrono::duration<long double> work_time = end - begin;
 	
 	cout << "-----------------------------------------------" << endl;
 	cout << "Operacja wykonana w " << work_time.count()*1000 << " ms." << endl;
 
 	// Kontrola poprawności działania
-	cout << "SIZE: " << tablica_dynamiczna.tabl_size() << endl;
+	cout << "Elementów:        " << tablica_dynamiczna.nOE() << endl;
+	cout << "Wielkość tablicy: " << tablica_dynamiczna.aSize() << endl;
+	//tablica_dynamiczna.showElems();
 }

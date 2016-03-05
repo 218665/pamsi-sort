@@ -12,34 +12,41 @@ using namespace std;
  * Przechowuje elementy w rozszerzalnej tablicy o rozmiarze początkowym SIZE
  *
  * Pola:
- * * tab:  wskaźnik na tablicę
- * * size: aktualny rozmiar tablicy
+ * * tab:  				wskaźnik na tablicę
+ * * allocatedSize: 	aktualny rozmiar tablicy
+ * * numberOfElems: 	liczba wpisanych elementów
  *
  * Metody:
- * * tabn:          konstruktor
- * * ~tabn:	        destruktor
- * * add_elem_last: rozszerza listę o 1 jeśli ilość elementów ma przekroczyć SIZE
- * * show_elems:    wyświetla listę elementów (przydatne do debugowania)
- * * tabl_size:     zwraca liczbę elementów w tablicy (przydatne do debugowania)
+ * * tabn:          	konstruktor
+ * * ~tabn:	        	destruktor
+ * * addElemLast: 		rozszerza tablicę o 1 jeśli ilość elementów ma przekroczyć wielkość tablicy.
+ * * addElemDoubleTabl: rozszerza tablicę dwukrotnie, jeśli ilość elementów ma przekroczyć wielkość tablicy
+ * * addElem1Tabl5: 	rozszerza tablicę 1.5-krotnie, jeśli ilość elementów ma przekroczyć wielkość tablicy
+ * * showElems:    		wyświetla listę elementów (przydatne do debugowania)
+ * * nOE:     			zwraca liczbę elementów w tablicy (przydatne do debugowania)
+ * * aSize:				zwraca wielkość zaalokowanej tablicy (przydatne do debugowania)
  */
  
 class tabn {
 private:
 	int* tab;
-	int size;
+	int allocatedSize;
+	int numberOfElems;
 public:
 	tabn() {
-		size = 0;
+		allocatedSize = SIZE;
+		numberOfElems = 0;
 		tab = new int[SIZE];
 	}
 	~tabn() {
 		delete [] tab;
 	}
 	
-	void add_elem_last(int);
-	void show_elems(void);
-	int tabl_size(void) {
-		return size;
-	}
+	void addElemLast(int);
+	void addElemDoubleTabl(int);
+	void addElem1Tabl5(int);
+	void showElems(void);
+	int nOE(void);
+	int aSize(void);
 };
 #endif
