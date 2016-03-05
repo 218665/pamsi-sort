@@ -29,9 +29,9 @@ int main (void) {
 			cin.ignore(1000000000, '\n');
 		}
 		else {
-			tablica_dynamiczna.addElemLast(liczba);
+			//tablica_dynamiczna.addElemLast(liczba);
 			//tablica_dynamiczna.addElemDoubleTabl(liczba);
-			//tablica_dynamiczna.addElem1Tabl5(liczba);
+			tablica_dynamiczna.addElem1Tabl5(liczba);
 			}
 	}
 	
