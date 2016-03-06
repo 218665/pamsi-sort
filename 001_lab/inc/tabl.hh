@@ -25,6 +25,7 @@ using namespace std;
  * * showElems:    		wyświetla listę elementów (przydatne do debugowania)
  * * nOE:     			zwraca liczbę elementów w tablicy (przydatne do debugowania)
  * * aSize:				zwraca wielkość zaalokowanej tablicy (przydatne do debugowania)
+ * * Przeciążenia operatora indeksowania zezwalają na dostęp do dowolnego elementu tablicy, bez sprawdzania zakresu.
  */
  
 class tabn {
