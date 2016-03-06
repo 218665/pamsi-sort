@@ -50,6 +50,14 @@ void tabn::addElem1Tabl5 (int elem) {
 		 	tab = nowy;
 		}
 }
+
+int& tabn::operator [] (int index) {
+	return tab[index];
+}
+
+int tabn::operator [] (int index) const {
+	return tab[index];
+}
 	
 void tabn::showElems (void) {
 		for (int i=0; i<numberOfElems; i++) {

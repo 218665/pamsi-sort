@@ -48,5 +48,7 @@ public:
 	void showElems(void);
 	int nOE(void);
 	int aSize(void);
+	int& operator [] (int);
+	int operator [] (int) const;
 };
 #endif
