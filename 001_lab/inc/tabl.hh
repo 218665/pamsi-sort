@@ -1,6 +1,7 @@
 #ifndef _TABL_HH
 #define _TABL_HH
 #include <iostream>
+#include "run.hh"
 
 #define SIZE 10
 
@@ -52,4 +53,10 @@ public:
 	int& operator [] (int);
 	int operator [] (int) const;
 };
+
+
+
+//class tabn_test: public IRunnable {
+//	public
+//};
 #endif

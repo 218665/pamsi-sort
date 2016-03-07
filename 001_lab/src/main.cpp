@@ -9,6 +9,7 @@
 #include <ctime>
 #include "../inc/tabl.hh"
 #include "../inc/main.hh"
+#include "../inc/run.hh"
 using namespace std;
 
 
@@ -16,10 +17,10 @@ int main (void) {
 	
 	tabn tablica_dynamiczna;
 	int liczba = 0;
-	chrono::time_point<chrono::high_resolution_clock> begin, end;
+	Stoper stoper;
 	
 	// Rozpoczęcie liczenia czasu 
-	begin = chrono::high_resolution_clock::now();
+	stoper.start();
 	
 	// Czynność
 	while (!cin.eof()) {
@@ -36,16 +37,12 @@ int main (void) {
 	}
 	
 	// Zakończenie liczenia czasu
-	end = chrono::high_resolution_clock::now();
-	
-	// Czas trwania
-	chrono::duration<long double> work_time = end - begin;
+	stoper.stop();
 	
 	cout << "-----------------------------------------------" << endl;
-	cout << "Operacja wykonana w " << work_time.count()*1000 << " ms." << endl;
+	cout << "Operacja wykonana w " << stoper.getElapsedTimeMs() << " ms." << endl;
 
 	// Kontrola poprawności działania
 	cout << "Elementów:        " << tablica_dynamiczna.nOE() << endl;
 	cout << "Wielkość tablicy: " << tablica_dynamiczna.aSize() << endl;
-	//tablica_dynamiczna.showElems();
 }

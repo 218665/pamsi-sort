@@ -1,6 +1,15 @@
 # pamsi
 
 ####Projektowanie algorytmów i metody sztucznej inteligencji
+######Zajęcia 2
+
+Zadania:
+
+- [ ] Przeprojektować tablicę dynamiczną i stoper.
+- [ ] Wykonać ponowne pomiary dziesięciokrotnie i wyliczyć średnią.
+- [ ] Przygotowanie: ADT, lista, kolejka, stos.
+
+
 ######Zajęcia 1
 
 Zadania:
