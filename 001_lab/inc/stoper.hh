@@ -21,7 +21,7 @@ public:
 	virtual void start(void) = 0;
 	virtual void stop(void) = 0;
 	virtual long double getElapsedTimeMs(void) = 0;
-	virtual void dumpToFile(void) = 0;
+	virtual void dumpToFile(string) = 0;
 	virtual ~IStoper (){}
 };
 
@@ -33,17 +33,11 @@ private:
 	chrono::time_point<chrono::high_resolution_clock> begin, end;
 	chrono::duration<long double> work_time;
 public:
-	virtual void start(void) {
-		begin = chrono::high_resolution_clock::now();
-	}
-	virtual void stop(void) {
-		end = chrono::high_resolution_clock::now();
-	}
-	virtual long double getElapsedTimeMs(void) {
-		work_time = end - begin;
-		return work_time.count()*1000;
-	}
-	virtual void dumpToFile(void) { }
+	virtual void start(void);
+	virtual void stop(void);
+	virtual long double getElapsedTimeMs(void);
+	virtual void dumpToFile(string);
+	
 };
 
 

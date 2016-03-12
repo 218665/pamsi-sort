@@ -12,6 +12,7 @@ void Starter::test (void) {
 	runner->run();
 	stoper->stop();
 	printResults();
+	stoper->dumpToFile("testfile");
 	
 }
 	
