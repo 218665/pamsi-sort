@@ -1,5 +1,23 @@
 #include "../inc/tabl.hh"
 
+void tabn::setExpandMode(expandType type) {
+	expandMode = type;
+}
+
+void tabn::add (int element) {
+	switch (expandMode) {
+		case one:
+			addElemLast(element); break;
+		case twice:
+			addElemDoubleTabl(element); break;
+		case onehalf:
+			addElem1Tabl5(element); break;
+		default:
+			break;
+	}
+}
+
+
 void tabn::addElemLast(int elem) {
 		 numberOfElems++;
 		 if (numberOfElems <= allocatedSize) {
@@ -74,3 +92,32 @@ int tabn::aSize(void) {
 		return allocatedSize;
 	}
 	
+void tabn_test::seedSrand (void) {
+	srand(time(NULL));
+}
+	
+int tabn_test::generateRandomDgt (void) {
+	return rand()%10 + 1;
+}
+
+
+void tabn_test::setTypeOfExpansion(expandType type) {
+	test->setExpandMode(type);
+}
+
+
+bool tabn_test::prepare (int sizeOfTest) {
+	counter = sizeOfTest;
+	setTypeOfExpansion(twice);
+	return true;
+}
+
+bool tabn_test::run (void) {
+	for (;counter>0;counter--) {
+			test->add(randomDgtToWrite);
+	}
+	cout << "SIZE:  " << test->aSize() << endl;
+	cout << "Elems: " << test->nOE() << endl;
+	return true;
+}
+

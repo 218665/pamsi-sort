@@ -19,3 +19,7 @@ Zadania:
 - [x] Przedstaw wyniki w sprawozdaniu. 
 
 Program w punkcie 2. powinien mieć dokładność na poziomie 1ms. Wykorzystać inne strategie powiększania tablicy.
+
+
+
+Zauważyłem znaczny wzrost zainteresowania tym repo w niedzielę 6 marca. Ciekawe dlaczego... Pozdrawiam! 

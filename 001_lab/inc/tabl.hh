@@ -7,6 +7,23 @@
 
 using namespace std;
 
+enum expandType {one, twice, onehalf}; 
+
+class Itabn {
+public:
+	virtual void setExpandMode (expandType) = 0;
+	virtual void add(int) = 0;
+	virtual void addElemLast (int) = 0;
+	virtual void addElemDoubleTabl(int) = 0;
+	virtual void addElem1Tabl5(int) = 0 ;
+	virtual void showElems(void) = 0;
+	virtual int nOE(void) = 0;
+	virtual int aSize(void) = 0;
+	virtual int& operator [] (int) = 0;
+	virtual int operator [] (int) const = 0;
+	virtual ~Itabn(){}
+};
+
 /*
  * Klasa tabn
  *
@@ -29,34 +46,56 @@ using namespace std;
  * * Przeciążenia operatora indeksowania zezwalają na dostęp do dowolnego elementu tablicy, bez sprawdzania zakresu.
  */
  
-class tabn {
+class tabn : public Itabn{
 private:
 	int* tab;
 	int allocatedSize;
 	int numberOfElems;
+	expandType expandMode;
 public:
 	tabn() {
 		allocatedSize = SIZE;
 		numberOfElems = 0;
 		tab = new int[SIZE];
+		expandMode = one;
 	}
-	~tabn() {
+	virtual ~tabn() {
 		delete [] tab;
 	}
-	
-	void addElemLast(int);
-	void addElemDoubleTabl(int);
-	void addElem1Tabl5(int);
-	void showElems(void);
-	int nOE(void);
-	int aSize(void);
-	int& operator [] (int);
-	int operator [] (int) const;
+	virtual void setExpandMode(expandType);
+	virtual void add(int);
+	virtual void addElemLast(int);
+	virtual void addElemDoubleTabl(int);
+	virtual void addElem1Tabl5(int);
+	virtual void showElems(void);
+	virtual int nOE(void);
+	virtual int aSize(void);
+	virtual int& operator [] (int);
+	virtual int operator [] (int) const;
 };
 
 
 
-//class tabn_test: public IRunnable {
-//	public
-//};
+class tabn_test : public IRunnable  {
+	private:
+		Itabn * test;
+		int randomDgtToWrite;
+		int counter;
+	public:
+		tabn_test () : test (new tabn) {
+			seedSrand();
+			randomDgtToWrite = generateRandomDgt();
+		}
+		~tabn_test () {
+			delete test;
+		}
+		void seedSrand (void);
+		int generateRandomDgt (void);
+		void setTypeOfExpansion(expandType);
+		virtual bool prepare(int);
+		virtual bool run();	
+};
+
+
+
 #endif
