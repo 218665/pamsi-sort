@@ -18,13 +18,16 @@ using namespace std;
 // twice 	- rozszerzaj dwukrotnie
 // onehalf 	- rozszerzaj 1,5 razy
 // Można redefiniować przy kolejnych testach.
-expandType typeOfExp = one;
+expandType typeOfExp = twice;
 
 
 int main (void) {
-	Starter sedzia;
-	sedzia.setTestSize(1000);
-	sedzia.test();
-	sedzia.printResults();
-	sedzia.dumpToFile("test1000");	
+	for (unsigned int i = 0; i < 10; i++) {
+		Starter sedzia;
+		sedzia.setTestSize(100);
+		sedzia.test();
+		sedzia.printResults();
+		sedzia.dumpToFile("test_twice_100");	
+	}
+	
 }
