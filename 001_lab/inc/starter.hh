@@ -11,8 +11,7 @@
 #include <fstream>
 
 /*!
- *\brief Klasa pozwala na przeprowadzenie badań nad klasą
- * implementującą interfejs IRunnable.
+ *\brief Klasa pozwala na przeprowadzenie testów
  *
  */
 class Starter {

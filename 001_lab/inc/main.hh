@@ -21,11 +21,11 @@ enum expandType {one, twice, onehalf};
  * tablicy w funkcji tabn.
  *
  * Nie jest to idealne rozwiązanie, ale każda klasa implementująca
- * interfejs IRunnable może być inna. Musi także istnieć możliwość 
+ * Runnable może być inna. Musi także istnieć możliwość 
  * wyboru trybu rozszerzania tablicy. Stworzenie oddzielnych klas 
  * tabn dla każdego trybu oddzielnie znacznie zwiększa rozmiary kodu
  * i komplikuje go. Obecne obejście:
- * + Nie powoduje konieczności zmiany IRunnable zależnie od
+ * + Nie powoduje konieczności zmiany Runnable zależnie od
  *   badanej funkcji
  * + Nie wymusza tworzenia trzech oddzielnych klas dla każdego trybu,
  *   następnie stworzenia trzech klas tabn_test itd.

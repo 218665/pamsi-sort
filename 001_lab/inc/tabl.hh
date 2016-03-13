@@ -192,7 +192,7 @@ public:
  	 * Pozwala na wykonanie testu w pętli for iterującej
  	 * \link counter \endlink razy. Zasila funkcję dodawania
  	 * generując losowe cyfry w funkcji 
- 	 * \link henerateRandomDgt() \endlink
+ 	 * \link generateRandomDgt() \endlink
  	 *
  	 * \retval zawsze true
 	 */
