@@ -1,5 +1,10 @@
 #include "../inc/starter.hh"
 
+void Starter::setTestSize(unsigned int testsize) {
+	runner->prepare(testsize);
+	testSizeToDump = testsize;
+}
+
 void Starter::printResults(void) {
 	cout << "-----------------------------------------------" << endl;
 	cout << "Operacja wykonana w " << stoper->getElapsedTimeMs() << " ms." << endl;
@@ -7,12 +12,17 @@ void Starter::printResults(void) {
 
 
 void Starter::test (void) {
-	runner->prepare(1000);
 	stoper->start();
 	runner->run();
 	stoper->stop();
-	printResults();
-	stoper->dumpToFile("testfile");
-	
 }
 	
+void Starter::dumpToFile (string nameOfFile) {
+	fstream file;
+	file.open(nameOfFile, ios::app);
+	if (file.good()) {
+		file << to_string(testSizeToDump) << " ";
+		file << to_string(stoper->getElapsedTimeMs()) << endl;
+	}
+	file.close();
+}

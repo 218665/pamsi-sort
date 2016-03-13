@@ -14,7 +14,7 @@ obj/starter.o: src/starter.cpp inc/starter.hh src/stoper.cpp inc/stoper.hh src/r
 obj/run.o: src/run.cpp inc/run.hh src/tabl.cpp inc/tabl.hh
 	$(G) $(GFLAGS) -c ./src/run.cpp -o ./obj/run.o
 	
-obj/tabl.o: src/tabl.cpp inc/tabl.hh
+obj/tabl.o: src/tabl.cpp inc/tabl.hh inc/main.hh
 	$(G) $(GFLAGS) -c ./src/tabl.cpp -o ./obj/tabl.o
 	
 obj/stoper.o: src/stoper.cpp inc/stoper.hh

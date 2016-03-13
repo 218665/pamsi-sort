@@ -1,4 +1,3 @@
-#include <fstream>
 #include "../inc/stoper.hh"
 
 
@@ -15,13 +14,13 @@ long double Stoper::getElapsedTimeMs(void) {
 	return work_time.count()*1000;
 }
 
-void Stoper::dumpToFile (string filename) {
-	fstream file;
-	string result;
-	file.open(filename, ios::app);
-	result = to_string(getElapsedTimeMs());
-	if (file.good()) {
-		file << result << endl;
-	}
-	file.close();
-}
+//void Stoper::dumpToFile (string filename) {
+//	fstream file;
+//	string result;
+//	file.open(filename, ios::app);
+//	result = to_string(getElapsedTimeMs());
+//	if (file.good()) {
+//		file << result << endl;
+//	}
+//	file.close();
+//}

@@ -5,7 +5,7 @@
 
 Zadania:
 
-- [ ] Przeprojektować tablicę dynamiczną i stoper.
+- [x] Przeprojektować tablicę dynamiczną i stoper.
 - [ ] Wykonać ponowne pomiary dziesięciokrotnie i wyliczyć średnią.
 - [ ] Przygotowanie: ADT, lista, kolejka, stos.
 

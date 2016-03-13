@@ -92,23 +92,13 @@ int tabn::aSize(void) {
 		return allocatedSize;
 	}
 	
-void tabn_test::seedSrand (void) {
-	srand(time(NULL));
-}
-	
-int tabn_test::generateRandomDgt (void) {
-	return rand()%10;
-}
-
-
 void tabn_test::setTypeOfExpansion(expandType type) {
 	test->setExpandMode(type);
 }
 
-
-bool tabn_test::prepare (int sizeOfTest) {
+bool tabn_test::prepare (unsigned int sizeOfTest) {
 	counter = sizeOfTest;
-	setTypeOfExpansion(one);
+	setTypeOfExpansion(typeOfExp);
 	return true;
 }
 
@@ -116,8 +106,8 @@ bool tabn_test::run (void) {
 	for (;counter>0;counter--) {
 			test->add(generateRandomDgt());
 	}
-	cout << "SIZE:  " << test->aSize() << endl;
-	cout << "Elems: " << test->nOE() << endl;
+	cerr << "SIZE:  " << test->aSize() << endl;
+	cerr << "Elems: " << test->nOE() << endl;
 	return true;
 }
 
