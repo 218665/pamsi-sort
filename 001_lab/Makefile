@@ -1,7 +1,8 @@
 G = g++
 GFLAGS = -Wall -pedantic -g -std=c++11 -Iinc
 ALLFILES = obj/tabl.o obj/run.o src/main.cpp inc/tabl.hh inc/main.hh inc/run.hh inc/stoper.hh \
-	obj/stoper.o inc/starter.hh obj/starter.o inc/lista.hh obj/lista.o inc/stos.hh obj/stos.o inc/kolejka.hh obj/kolejka.o
+	obj/stoper.o inc/starter.hh obj/starter.o inc/lista.hh obj/lista.o inc/stos.hh obj/stos.o \
+	inc/kolejka.hh obj/kolejka.o
 
 tabl: obj $(ALLFILES)
 	$(G) $(GFLAGS) ./obj/tabl.o ./obj/run.o ./obj/stoper.o ./obj/starter.o obj/lista.o obj/stos.o obj/kolejka.o ./src/main.cpp -o tabl
