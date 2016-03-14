@@ -1,9 +1,10 @@
 G = g++
 GFLAGS = -Wall -pedantic -g -std=c++11 -Iinc
-ALLFILES = obj/tabl.o obj/run.o src/main.cpp inc/tabl.hh inc/main.hh inc/run.hh inc/stoper.hh obj/stoper.o inc/starter.hh obj/starter.o
+ALLFILES = obj/tabl.o obj/run.o src/main.cpp inc/tabl.hh inc/main.hh inc/run.hh inc/stoper.hh \
+	obj/stoper.o inc/starter.hh obj/starter.o inc/lista.hh obj/lista.o inc/stos.hh obj/stos.o inc/kolejka.hh obj/kolejka.o
 
 tabl: obj $(ALLFILES)
-	$(G) $(GFLAGS) ./obj/tabl.o ./obj/run.o ./obj/stoper.o ./obj/starter.o ./src/main.cpp -o tabl
+	$(G) $(GFLAGS) ./obj/tabl.o ./obj/run.o ./obj/stoper.o ./obj/starter.o obj/lista.o obj/stos.o obj/kolejka.o ./src/main.cpp -o tabl
 
 obj:
 	mkdir obj
@@ -19,6 +20,16 @@ obj/tabl.o: src/tabl.cpp inc/tabl.hh inc/main.hh
 	
 obj/stoper.o: src/stoper.cpp inc/stoper.hh
 	$(G) $(GFLAGS) -c ./src/stoper.cpp -o ./obj/stoper.o
+	
+obj/lista.o: src/lista.cpp inc/lista.hh
+	$(G) $(GFLAGS) -c ./src/lista.cpp -o ./obj/lista.o
+	
+obj/stos.o: src/stos.cpp inc/stos.hh
+	$(G) $(GFLAGS) -c ./src/stos.cpp -o ./obj/stos.o
+
+obj/kolejka.o: src/kolejka.cpp inc/kolejka.hh
+	$(G) $(GFLAGS) -c ./src/kolejka.cpp -o ./obj/kolejka.o
+
 	
 clean:
 	rm -fr ./obj/*.o tabl

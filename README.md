@@ -1,6 +1,16 @@
 # pamsi
 
 ####Projektowanie algorytmów i metody sztucznej inteligencji
+######Zajęcia 3
+
+Zadania:
+
+- [ ] Lista, stos, kolejka - implementacja.
+- [ ] Doxygen - dokumentacja, wygenerowanie pdf.
+- [ ] Zbadać czas przeszukiwania listy dla 10^1, 10^2, 10^3, 10^6, 10^9 (zbiór za każdym razem inny).
+- [ ] Następne zajęcia - algorytmy sortowania.
+
+
 ######Zajęcia 2
 
 Zadania:
