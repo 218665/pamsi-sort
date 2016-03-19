@@ -1,6 +1,0 @@
-<map id="starter.cpp" name="starter.cpp">
-<area shape="rect" id="node2" href="$starter_8hh.html" title="Plik definiuje klasę Starter. " alt="" coords="161,80,272,107"/>
-<area shape="rect" id="node3" href="$stoper_8hh.html" title="stoper.hh" alt="" coords="41,155,117,181"/>
-<area shape="rect" id="node7" href="$run_8hh.html" title="Plik definiuje klasę Runnable, ujednolicającą klasy umożliwiające badanie algorytmów. " alt="" coords="188,229,247,256"/>
-<area shape="rect" id="node8" href="$tabl_8hh.html" title="Definicja interfejsu klasy tabn, klasy tabn oraz klasy tabn_test. " alt="" coords="220,155,282,181"/>
-</map>
