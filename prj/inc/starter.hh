@@ -16,7 +16,7 @@
  */
 class Starter {
 private:
-	Runnable * runner;
+	IRunnable * runner;
 	IStoper * stoper;
 	unsigned int testSizeToDump;
 public:

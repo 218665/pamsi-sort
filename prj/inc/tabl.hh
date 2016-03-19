@@ -14,35 +14,6 @@
 
 using namespace std;
 
-/*!
- * \brief Typ wyliczeniowy decydujący o sposobie rozszerzania
- * tablicy dynamicznej 
- *
- */
-//enum expandType {one, twice, onehalf}; 
-
-/*!
- * \brief Decyduje o typie rozszerzania tablicy
- *
- * Zdefiniuj zmienną expandType w main, aby zmienić tryb rozszerzania
- * tablicy w funkcji tabn.
- *
- * Nie jest to idealne rozwiązanie, ale każda klasa implementująca
- * Runnable może być inna. Musi także istnieć możliwość 
- * wyboru trybu rozszerzania tablicy. Stworzenie oddzielnych klas 
- * tabn dla każdego trybu oddzielnie znacznie zwiększa rozmiary kodu
- * i komplikuje go. Obecne obejście:
- * + Nie powoduje konieczności zmiany Runnable zależnie od
- *   badanej funkcji
- * + Nie wymusza tworzenia trzech oddzielnych klas dla każdego trybu,
- *   następnie stworzenia trzech klas tabn_test itd.
- * - Wymaga jedynie od użytkownika użycia dodatkowej definicji.
- *
- * Bardzo proszę o kontakt, jeśli można to rozwiązać lepiej. 
- */
-//extern expandType typeOfExp;
-//expandType typeOfExp = twice;
-
 /*
  * \brief Interfejs klasy tabn
  *
@@ -50,7 +21,7 @@ using namespace std;
 template <class T>
 class Itabn {
 public:
-	//virtual void setExpandMode (expandType) = 0;
+
 	virtual void add(T) = 0;
 	//virtual void remove(int) = 0;
 	virtual void showElems(void) = 0;
@@ -73,7 +44,7 @@ private:
 	T* tab;
 	int allocatedSize;
 	int numberOfElems;
-	//expandType expandMode;
+
 public:
 
 	/*!
@@ -94,16 +65,9 @@ public:
 		delete [] tab;
 	}
 	
-	/*
-	 * \brief Ustawia tryb rozszerzania.
-	 * Pozwala na ustawienie trybu rozszerzania tablicy dynamicznej.
-	 *
-	 * \param type - sposób rozszerzania tablicy
-	 */
-	//virtual void setExpandMode(expandType);
 	
 	/*!
-	 * \brief Dodaje element w zadanym trybie
+	 * \brief Dodaje element
 	 * Dodaje element do tablicy dynamicznej, odpowiednio ją rozszerzając
 	 *
 	 *\param element - element do dodania
@@ -111,13 +75,6 @@ public:
 	virtual void add(T);
 	
 private:
-	/*
-	 * \brief Rozszerza tablicę o 1 jeśli ilość elementów 
-	 * ma przekroczyć wielkość tablicy.
-	 *
-	 *\param element - element do dodania
-	 */
-	/*virtual*/ //void addElemLast(T);
 	
 	/*!
 	 *\brief Dodaje element. Rozszerza tablicę dwukrotnie, jeśli ilość elementów 
@@ -127,13 +84,6 @@ private:
 	 */
 	/*virtual*/ void addElemDoubleTabl(T);
 	
-	/*
-	 *\brief Rozszerza tablicę półtorakrotnie, jeśli ilość  
-	 * elementów ma przekroczyć wielkość tablicy.
-	 *
-	 *\param element - element do dodania
-	 */
-	/*virtual*/ //void addElem1Tabl5(T);
 	
 public:
 	/*
@@ -179,42 +129,13 @@ public:
 	virtual T operator [] (int) const;
 };
 
-//template <class T>
-//void tabn<T>::setExpandMode(expandType type) {
-//	expandMode = type;
-//}
+
 
 template <class T>
 void tabn<T>::add (T element) {
-//	switch (expandMode) {
-//		case one:
-//			addElemLast(element); break;
-//		case twice:
-			addElemDoubleTabl(element); //break;
-//		case onehalf:
-//			addElem1Tabl5(element); break;
-//		default:
-//			break;
-//	}
+		addElemDoubleTabl(element); 
 }
 
-//template <class T>
-//void tabn<T>::addElemLast(T elem) {
-//		 numberOfElems++;
-//		 if (numberOfElems <= allocatedSize) {
-//		 	tab[numberOfElems-1] = elem; 
-//		 }
-//		 else {
-//		 	T* nowy = new T[numberOfElems];
-//		 	allocatedSize++;
-//		 	for (int i=0; i<=(numberOfElems-2); i++) {
-//		 		nowy[i] = tab[i];
-//		 	}		 	
-//		 	nowy[numberOfElems-1] = elem;
-//		 	delete [] tab;
-//		 	tab = nowy;
-//		 }
-//	}
 	
 template <class T>
 void tabn<T>::addElemDoubleTabl(T elem) {
@@ -233,24 +154,6 @@ void tabn<T>::addElemDoubleTabl(T elem) {
 		 	tab = nowy;
 		}
 }
-
-//template <class T>
-//void tabn<T>::addElem1Tabl5 (T elem) {
-//		numberOfElems++;
-//		if (numberOfElems <= allocatedSize) {
-//			tab[numberOfElems-1] = elem; 
-//		}
-//		else {
-//			T* nowy = new T[allocatedSize+(allocatedSize/2)];
-//		 	allocatedSize=allocatedSize+(allocatedSize/2);
-//		 	for (int i=0; i<=(numberOfElems-2); i++) {
-//		 		nowy[i] = tab[i];
-//		 	}		 	
-//		 	nowy[numberOfElems-1] = elem;
-//		 	delete [] tab;
-//		 	tab = nowy;
-//		}
-//}
 
 template <class T>
 T& tabn<T>::operator [] (int index) {
@@ -285,7 +188,7 @@ int tabn<T>::aSize(void) {
 /*! \brief Definiuje sposób testowania tablicy tabn
  *
  */
-class tabn_test : public Runnable  {
+class tabn_test : public IRunnable  {
 private:
 	Itabn<int> * test;
 	unsigned int counter;
@@ -303,15 +206,27 @@ public:
 		delete test;
 	}
 	
-	/*
- 	 * \brief Pozwala na zmianę trybu rozszerzania tablicy
- 	 *
- 	 * \param type - typ rozszerzania tablicy
+private:
+
+	/*!
+	 * \brief Metoda ustawia punkt startowy generatora
+	 * pseudolosowego.
 	 */
-//	void setTypeOfExpansion(expandType type) {
-//		test->setExpandMode(type);
-//	}
+	void seedSrand (void) {
+		srand(time(NULL));
+	}
 	
+	/*!
+	 * \brief Metoda generuje liczbę pseudolosową z zakresu 0..9
+	 *
+	 *\retval Liczba pseudolosowa z zakresu 0..9
+	 */
+	int generateRandomDgt (void) {
+		return rand()%10;
+	}
+
+
+public:		
 	/*!
  	 * \brief Przygotowuje rozmiar testu
  	 *
@@ -320,7 +235,6 @@ public:
 	 */
 	virtual bool prepare(unsigned int sizeOfTest) {
 		counter = sizeOfTest;
-//		setTypeOfExpansion(typeOfExp);
 		return true;
 	}
 	

@@ -3,7 +3,7 @@
 
 /*!
  *\file
- *\brief Plik definiuje klasę Runnable, ujednolicającą
+ *\brief Plik definiuje interfejs IRunnable, ujednolicający
  * klasy umożliwiające badanie algorytmów.
  */
 #include <iostream>
@@ -12,42 +12,30 @@
 using namespace std;
 
 /*!
- * \brief Klasa ujednolica sposób uruchamiania klasy badającej
+ * \brief Interfejs ujednolicający sposób uruchamiania klasy badającej
  * algorytm
  */
-class Runnable {
+class IRunnable {
 public:
 	/*!
-	 * \brief Przygotowuje badania
+	 * \brief Przygotowanie badań
 	 *
 	 *\retval Zawsze true
 	 */
 	virtual bool prepare (unsigned int) = 0;
 	
 	/*!
-	 * \brief Przeprowadza badania
+	 * \brief Przeprowadzanie badań
 	 *
 	 *\retval Zawsze true
 	 */
 	virtual bool run () = 0;
 	
 	/*!
-	 * \brief Destruktor wirtualny klasy Runnable.
+	 * \brief Destruktor wirtualny IRunnable.
 	 */
-	virtual ~Runnable () {}
+	virtual ~IRunnable () {}
 	
-	/*!
-	 * \brief Metoda ustawia punkt startowy generatora
-	 * pseudolosowego.
-	 */
-	void seedSrand (void);
-	
-	/*!
-	 * \brief Metoda generuje liczbę pseudolosową z zakresu 0..9
-	 *
-	 *\retval Liczba pseudolosowa z zakresu 0..9
-	 */
-	int generateRandomDgt(void);
 };
 
 
