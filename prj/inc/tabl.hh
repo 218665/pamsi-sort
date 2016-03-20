@@ -4,31 +4,77 @@
 /*!
  * \file
  * \brief Definicja interfejsu klasy tabn, klasy tabn oraz klasy tabn_test
- * 
- *
  */
 #include <iostream>
+#include <exception>
 #include "run.hh"
 
 #define SIZE 10
 
 using namespace std;
 
-/*
+/*!
  * \brief Interfejs klasy tabn
  *
+ * Definiuje jednolity sposób dostępu do tablicy rozszerzalnej.
  */
 template <class T>
 class Itabn {
 public:
 
+	/*!
+	 *\brief Sprawdza, czy tablica jest pusta
+	 */
+	 virtual bool isEmpty(void) = 0;
+	 
+	/*!
+	 *\brief Dodaje element na koniec tablicy
+	 */
 	virtual void add(T) = 0;
-	//virtual void remove(int) = 0;
+	
+	/*!
+	 *\brief Dodaje element w dane miejsce do tablicy, przesuwając wszystkie następne elementy o miejsce w prawo
+	 */
+	virtual void add(T,int) = 0;
+	
+	/*!
+	 *\brief Usuwa element z końca tablicy
+	 */
+	virtual void remove() = 0;
+	
+	/*!
+	 *\brief Usuwa wybrany element z listy
+	 */
+	virtual void remove(int) = 0;
+	
+	/*!
+	 *\brief Wyświetla elementy listy
+	 */
 	virtual void showElems(void) = 0;
+	
+	/*!
+	 *\brief Zwraca liczbę elementów w tablicy
+	 */
 	virtual int nOE(void) = 0;
+	
+	/*!
+	 *\brief Zwraca ilość miejsca w tablicy
+	 */
 	virtual int aSize(void) = 0;
+	
+	/*!
+	 *\brief Pozwala na dostęp do dowolnego elementu
+	 */
 	virtual T& operator [] (int) = 0;
+	
+	/*!
+	 *\brief Pozwala na dostęp do dowolnego elementu
+	 */
 	virtual T operator [] (int) const = 0;
+	
+	/*!
+	 *\brief Destruktor witrualny interfejsu
+	 */
 	virtual ~Itabn(){}
 };
 
@@ -48,22 +94,63 @@ private:
 public:
 
 	/*!
-	 * \brief Konstruktor klasy tabn.
-	 * 
+	 *\brief Konstruktor klasy tabn.
 	 */
 	tabn() {
 		allocatedSize = SIZE;
 		numberOfElems = 0;
 		tab = new T[SIZE];
-		//expandMode = twice;
 	}
 	
 	/*!
-	 * \brief Destruktor klasy tabn.
+	 *\brief Destruktor klasy tabn.
 	 */
 	virtual ~tabn() {
 		delete [] tab;
 	}
+	
+private:
+	
+	/*!
+	 *\brief Rozszerza tablicę dwukrotnie
+	 *
+	 * Rozszerzanie wykonywane jest poprzez stworzenie dwa razy większej tablicy,
+	 * skopiowanie do niej danych, usunięcie mniejszej i zastąpienie jej nową.
+	 */
+	void expand2(void);
+	
+	/*!
+	 *\brief Zmniejsza tablicę dwukrotnie
+	 *
+	 * Metoda pozwala na skopiowanie danych do dwa razy mniejszej tablicy i zastąpienie nią
+	 * dotychczasowej.
+	 */
+	void reduce2(void);
+	
+	/*!
+	 *\brief Wyrzuca wyjątek, gdy tablica jest pusta
+	 */
+	void isEmptyException (void);
+	
+	/*!
+	 *\brief Przesuwa elementy od pozycji \link positionShifted \endlink w prawo
+	 */
+	 void shiftRight (T,int);
+	 
+	 /*!
+	 *\brief Przesuwa elementy od pozycji \link positionShifted \endlink w lewo
+	 */
+	 void shiftLeft (int);
+	
+public:	
+	
+	/*!
+	 *\brief Sprawdza, czy tablica jest pusta
+	 *
+	 *\retval 0 gdy tablica nie jest pusta
+	 *\retval 1 gdy tablica jest pusta
+	 */
+	 virtual bool isEmpty(void);
 	
 	
 	/*!
@@ -74,22 +161,20 @@ public:
 	 */
 	virtual void add(T);
 	
-private:
+	/*!
+	 *\brief Dodaje element w dane miejsce do tablicy, przesuwając wszystkie następne elementy o miejsce w prawo
+	 */
+	virtual void add(T,int);
 	
 	/*!
-	 *\brief Dodaje element. Rozszerza tablicę dwukrotnie, jeśli ilość elementów 
-	 * ma przekroczyć wielkość tablicy.
-	 *
-	 *\param element - element do dodania
-	 */
-	/*virtual*/ void addElemDoubleTabl(T);
-	
-	
-public:
-	/*
 	 * \brief Usuwa ostatni element z listy,
-	 *
 	 */
+	virtual void remove();
+	
+	/*!
+	 *\brief Usuwa wybrany element z listy, przesuwając wszystkie następne elementy o miejsce w lewo
+	 */
+	virtual void remove(int);
 
 	/*!
 	 * \brief Wyświetla listę elementów
@@ -112,7 +197,7 @@ public:
 	
 	/*!
 	 *\brief Umożliwia dostęp do dowolnego elementu tablicy bez
-	 * sprawdzania zakresu
+	 * sprawdzania zakresu (debug)
 	 *
 	 *\param index - numer elementu tablicy
 	 *\retval T* Wskaźnik na wybrany element tablicy
@@ -121,7 +206,7 @@ public:
 	
 	/*!
 	 *\brief Umożliwia odczyt dowolnego elementu tablicy bez
-	 * sprawdzania zakresu
+	 * sprawdzania zakresu (debug)
 	 *
 	 *\param index - numer elementu tablicy
 	 *\retval T Element tablicy
@@ -133,26 +218,154 @@ public:
 
 template <class T>
 void tabn<T>::add (T element) {
-		addElemDoubleTabl(element); 
+	numberOfElems++;
+	if (((numberOfElems) > allocatedSize))
+		expand2(); 	
+	tab[numberOfElems-1] = element;
 }
 
-	
 template <class T>
-void tabn<T>::addElemDoubleTabl(T elem) {
-		numberOfElems++;
-		if (numberOfElems <= allocatedSize) {
-			tab[numberOfElems-1] = elem; 
+void tabn<T>::add (T element, int position) {
+	try {
+		shiftRight(element,position);
+	}
+	catch (string ex) {
+		cout << "Exception: " << ex << endl;
+		delete [] tab;
+		terminate();
+	}
+	tab[position] = element;
+}
+
+template <class T>
+void tabn<T>::shiftRight (T element, int positionShifted) {
+	if (positionShifted>numberOfElems) {
+		string ex = "WrongPositionToShiftFromException";
+		throw ex;
+	}
+	numberOfElems++;
+	if (((numberOfElems) > allocatedSize))
+		expand2(); 	
+	T* nowy = new T[numberOfElems-positionShifted-1];
+	for(int i = positionShifted,j=0;i<(numberOfElems-1);i++,j++) {
+			nowy[j]=tab[i];
+	}
+	tab[positionShifted] = element;
+	for(int i = positionShifted+1,j=0;i<(numberOfElems);i++,j++) {
+			tab[i]=nowy[j];
+	}
+	delete [] nowy;
+}
+
+template <class T>
+void tabn<T>::remove() {
+	try {
+		isEmptyException();
+	}
+	catch (string ex) {
+		cout << "Exception: " << ex << endl;
+		delete [] tab;
+	}
+	numberOfElems--;
+	if ((((numberOfElems) <= (allocatedSize/2)) && (allocatedSize > SIZE))) {
+		try {
+			reduce2();
 		}
-		else {
-			T* nowy = new T[allocatedSize*2];
-		 	allocatedSize*=2;
-		 	for (int i=0; i<=(numberOfElems-2); i++) {
-		 		nowy[i] = tab[i];
-		 	}		 	
-		 	nowy[numberOfElems-1] = elem;
-		 	delete [] tab;
-		 	tab = nowy;
+		catch (string ex) {
+			cout << "Exception: " << ex << endl;
+			delete [] tab;
 		}
+	}
+}
+
+template <class T>
+void tabn<T>::remove(int position) {
+	try {
+		isEmptyException();
+	}
+	catch (string ex) {
+		cout << "Exception: " << ex << endl;
+		delete [] tab;
+	}
+	
+	try {
+		shiftLeft(position);
+	}
+	catch (string ex) {
+		cout << "Exception: " << ex << endl;
+		delete [] tab;
+	}
+	
+	if ((((numberOfElems) <= (allocatedSize/2)) && (allocatedSize > SIZE))) {
+		try {
+			reduce2();
+		}
+		catch (string ex) {
+			cout << "Exception: " << ex << endl;
+			delete [] tab;
+		}
+	}
+}
+
+template <class T>
+void tabn<T>::shiftLeft(int positionShifted) {
+	if (positionShifted>numberOfElems) {
+		string ex = "WrongPositionToShiftFromException";
+		throw ex;
+	}
+	
+	T* nowy = new T[numberOfElems-positionShifted-1];
+	for(int i = positionShifted+1,j=0;i<(numberOfElems);i++,j++) {
+			nowy[j]=tab[i];
+	}
+	numberOfElems--;
+	for(int i = positionShifted,j=0;i<(numberOfElems);i++,j++) {
+			tab[i]=nowy[j];
+	}
+	delete [] nowy;
+}
+
+template <class T>
+void tabn<T>::expand2(void) {
+	T* nowy = new T[allocatedSize*2];
+	allocatedSize*=2;
+	for (int i=0; i<=(numberOfElems-2); i++) {
+		nowy[i] = tab[i];
+	}
+	delete [] tab;
+	tab = nowy;
+}
+
+template <class T>
+void tabn<T>::reduce2(void) {
+	if(allocatedSize <= SIZE) {
+		string ex = "SmallestTableException";
+		throw ex;
+	}
+	T* nowy = new T[allocatedSize/2];
+	allocatedSize=allocatedSize/2;
+	for (int i=0;i<=(numberOfElems-1);i++){
+		nowy[i] = tab[i];
+	}
+	delete [] tab;
+	tab = nowy;
+}
+
+template <class T>
+bool tabn<T>::isEmpty(void) {
+	if (numberOfElems <= 0) {
+		return 1;
+	}
+	else return 0;
+}
+
+template <class T>
+void tabn<T>::isEmptyException (void) {
+	if (numberOfElems <= 0) {
+		string ex = "EmptyTableException";
+		throw ex;
+	}
+	else {}
 }
 
 template <class T>
@@ -191,7 +404,7 @@ int tabn<T>::aSize(void) {
 class tabn_test : public IRunnable  {
 private:
 	Itabn<int> * test;
-	unsigned int counter;
+	int counter;
 public:
 	/*!
 	 * \brief Konstruktor klasy tabn_test.
@@ -233,7 +446,7 @@ public:
  	 * \param sizeOfTest - rozmiar testu
  	 * \retval bool zawsze true
 	 */
-	virtual bool prepare(unsigned int sizeOfTest) {
+	virtual bool prepare(int sizeOfTest) {
 		counter = sizeOfTest;
 		return true;
 	}
@@ -252,6 +465,7 @@ public:
 		for (;counter>0;counter--) {
 			test->add(generateRandomDgt());
 		}
+		//test->showElems();
 		cerr << "SIZE:  " << test->aSize() << endl;
 		cerr << "Elems: " << test->nOE() << endl;
 		return true;

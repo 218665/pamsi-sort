@@ -20,14 +20,14 @@ public:
 	/*!
 	 * \brief Przygotowanie badań
 	 *
-	 *\retval Zawsze true
+	 *\retval bool zawsze true
 	 */
-	virtual bool prepare (unsigned int) = 0;
+	virtual bool prepare (int) = 0;
 	
 	/*!
 	 * \brief Przeprowadzanie badań
 	 *
-	 *\retval Zawsze true
+	 *\retval bool zawsze true
 	 */
 	virtual bool run () = 0;
 	

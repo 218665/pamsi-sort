@@ -54,7 +54,7 @@ public:
 	 * \brief Oblicza i zwraca czas pomiędzy uruchomieniem 
 	 * zegara a jego zatrzymaniem.
 	 *
-	 * \retval Czas pomiędzy startem a zatrzymaniem zegara
+	 * \retval long_double Czas pomiędzy startem a zatrzymaniem zegara
 	 */
 	virtual long double getElapsedTimeMs(void);
 

@@ -8,11 +8,11 @@
 template <class T>
 class ILista {
 public:
-	virtual void add(T, unsigned int) = 0;
-	virtual void remove(unsigned int) = 0;
+	virtual void add(T, int) = 0;
+	virtual void remove(int) = 0;
 	virtual bool isEmpty(void) = 0;
-	virtual T get(unsigned int) = 0;
-	virtual unsigned int size(void) = 0;
+	virtual T get(int) = 0;
+	virtual int size(void) = 0;
 	virtual ~ILista() {}
 };
 

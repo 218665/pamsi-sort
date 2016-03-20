@@ -22,7 +22,7 @@ private:
 public:
 	
 	/*!
-	 * \brief Kontruktor klasy tabn.
+	 * \brief Konstruktor klasy tabn.
 	 */
 	Starter () : runner(new tabn_test), stoper(new Stoper) {
 	}
@@ -38,7 +38,7 @@ public:
 	/*!
 	 * \brief Metoda ustawia wielkość testu
 	 *
-	 *\param[in] testsize - wielkość testu
+	 *\param testsize - wielkość testu
 	 */
 	void setTestSize(unsigned int);
 	
@@ -59,7 +59,7 @@ public:
 	 * Format zapisu:
 	 * wielkość_testu czas_trwania_ms
 	 *
-	 *\param[in] - nameOfFile - nazwa pliku wyjściowego
+	 *\param nameOfFile - nazwa pliku wyjściowego
 	 */
 	void dumpToFile (string);
 };
