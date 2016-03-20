@@ -3,7 +3,7 @@
 
 /*!
  * \file
- * \brief Definicja interfejsu klasy tabn, klasy tabn oraz klasy tabn_test
+ * \brief Definicja interfejsu Itabn, klasy tabn oraz klasy tabn_test
  */
 #include <iostream>
 #include <exception>
@@ -34,6 +34,8 @@ public:
 	
 	/*!
 	 *\brief Dodaje element w dane miejsce do tablicy, przesuwając wszystkie następne elementy o miejsce w prawo
+	 *\param element - wstawiany element
+	 *\param positionShifted - indeks pola, w które ma być wstawiony element.
 	 */
 	virtual void add(T,int) = 0;
 	
@@ -44,6 +46,7 @@ public:
 	
 	/*!
 	 *\brief Usuwa wybrany element z listy
+	 *\param positionShifted - indeks pola, z którego ma być usunięty element.
 	 */
 	virtual void remove(int) = 0;
 	
@@ -134,11 +137,14 @@ private:
 	
 	/*!
 	 *\brief Przesuwa elementy od pozycji \link positionShifted \endlink w prawo
+	 *\param element - wstawiany element
+	 *\param positionShifted - indeks pola, w które ma być wstawiony element. Elementy po nim następujące zostaną przesunięte o 1 w prawo
 	 */
 	 void shiftRight (T,int);
 	 
 	 /*!
 	 *\brief Przesuwa elementy od pozycji \link positionShifted \endlink w lewo
+	 *\param positionShifted - indeks pola, z którego ma być usuniety element. Elementy po nim następujące zostaną przesunięte o 1 w lewo
 	 */
 	 void shiftLeft (int);
 	
@@ -162,17 +168,20 @@ public:
 	virtual void add(T);
 	
 	/*!
-	 *\brief Dodaje element w dane miejsce do tablicy, przesuwając wszystkie następne elementy o miejsce w prawo
+	 *\brief Dodaje element w dane miejsce do tablicy, przesuwając wszystkie następne elementy o miejsce w prawo.
+	 *\param element - wstawiany element
+	 *\param positionShifted - indeks pola, w które ma być wstawiony element.
 	 */
 	virtual void add(T,int);
 	
 	/*!
-	 * \brief Usuwa ostatni element z listy,
+	 * \brief Usuwa ostatni element z listy.
 	 */
 	virtual void remove();
 	
 	/*!
 	 *\brief Usuwa wybrany element z listy, przesuwając wszystkie następne elementy o miejsce w lewo
+	 *\param positionShifted - indeks pola, z którego ma być usunięty element.
 	 */
 	virtual void remove(int);
 
@@ -398,7 +407,7 @@ int tabn<T>::aSize(void) {
 
 //------------------------------------------------------------------------------
 
-/*! \brief Definiuje sposób testowania tablicy tabn
+/*! \brief Definiuje sposób testowania wypełniania tablicy tabn
  *
  */
 class tabn_test : public IRunnable  {
