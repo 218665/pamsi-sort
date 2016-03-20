@@ -6,10 +6,17 @@
  *
  */
 
+ /*!
+  *\brief Interfejs stosu
+  *
+  * Definiuje dostępne operacje na klasie Stos
+  */
 template <class T>
 class IStos {
+
+	
 	virtual void push(T) = 0;
-	virtual void pull(void) = 0;
+	virtual T pull(void) = 0;
 	virtual bool isEmpty(void) = 0;
 	virtual T showTop(void) = 0;
 	virtual ~IStos(){}

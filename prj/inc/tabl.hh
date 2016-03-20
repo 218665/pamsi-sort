@@ -49,7 +49,11 @@ public:
 	 *\param positionShifted - indeks pola, z którego ma być usunięty element.
 	 */
 	virtual void remove(int) = 0;
-	
+	/*!
+	 *\brief Zwraca żadany element, o ile istnieje
+	 */
+	virtual T show (int) = 0;
+	 
 	/*!
 	 *\brief Wyświetla elementy listy
 	 */
@@ -184,6 +188,11 @@ public:
 	 *\param positionShifted - indeks pola, z którego ma być usunięty element.
 	 */
 	virtual void remove(int);
+	
+	/*!
+	 *\brief Zwraca żadany element, o ile istnieje
+	 */
+	 virtual T show (int);
 
 	/*!
 	 * \brief Wyświetla listę elementów
@@ -203,6 +212,8 @@ public:
 	 *\retval int Ilość zaalokowanych pól
 	 */
 	virtual int aSize(void);
+	
+
 	
 	/*!
 	 *\brief Umożliwia dostęp do dowolnego elementu tablicy bez
@@ -240,8 +251,7 @@ void tabn<T>::add (T element, int position) {
 	}
 	catch (string ex) {
 		cout << "Exception: " << ex << endl;
-		delete [] tab;
-		terminate();
+		cout << "Nastapila proba dodania elementu do niewlasciwego miejsca. (Indeks: " << position << ")" << endl;
 	}
 	tab[position] = element;
 }
@@ -249,7 +259,7 @@ void tabn<T>::add (T element, int position) {
 template <class T>
 void tabn<T>::shiftRight (T element, int positionShifted) {
 	if (positionShifted>numberOfElems) {
-		string ex = "WrongPositionToShiftFromException";
+		string ex = "WrongPositionToShiftFromRightException";
 		throw ex;
 	}
 	numberOfElems++;
@@ -273,7 +283,6 @@ void tabn<T>::remove() {
 	}
 	catch (string ex) {
 		cout << "Exception: " << ex << endl;
-		delete [] tab;
 	}
 	numberOfElems--;
 	if ((((numberOfElems) <= (allocatedSize/2)) && (allocatedSize > SIZE))) {
@@ -282,7 +291,6 @@ void tabn<T>::remove() {
 		}
 		catch (string ex) {
 			cout << "Exception: " << ex << endl;
-			delete [] tab;
 		}
 	}
 }
@@ -294,7 +302,6 @@ void tabn<T>::remove(int position) {
 	}
 	catch (string ex) {
 		cout << "Exception: " << ex << endl;
-		delete [] tab;
 	}
 	
 	try {
@@ -302,7 +309,7 @@ void tabn<T>::remove(int position) {
 	}
 	catch (string ex) {
 		cout << "Exception: " << ex << endl;
-		delete [] tab;
+		cout << "Nastapila proba usuniecia elementu z niewlasciwego miejsca. (Indeks: " << position << ")" << endl;
 	}
 	
 	if ((((numberOfElems) <= (allocatedSize/2)) && (allocatedSize > SIZE))) {
@@ -311,7 +318,6 @@ void tabn<T>::remove(int position) {
 		}
 		catch (string ex) {
 			cout << "Exception: " << ex << endl;
-			delete [] tab;
 		}
 	}
 }
@@ -319,7 +325,7 @@ void tabn<T>::remove(int position) {
 template <class T>
 void tabn<T>::shiftLeft(int positionShifted) {
 	if (positionShifted>numberOfElems) {
-		string ex = "WrongPositionToShiftFromException";
+		string ex = "WrongPositionToShiftFromLeftException";
 		throw ex;
 	}
 	
@@ -388,12 +394,25 @@ T tabn<T>::operator [] (int index) const {
 }
 
 template <class T>
+T tabn<T>::show(int position) {
+	if (position>=numberOfElems) {
+		string ex = "WrongIndexException";
+		throw ex;
+	}
+	else {
+		return tab[position];
+	}
+}
+
+template <class T>
 void tabn<T>::showElems (void) {
 		for (int i=0; i<numberOfElems; i++) {
 			cout << tab[i] << " ";
 		}
 		cout << endl;
 	}
+	
+
 	
 template <class T>
 int tabn<T>::nOE(void) {
