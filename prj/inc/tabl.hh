@@ -283,6 +283,10 @@ void tabn<T>::remove() {
 	}
 	catch (string ex) {
 		cout << "Exception: " << ex << endl;
+		//Aby zapobiec zwracaniu niewłaściwej wartości, program zostanie zakończony.
+		cout << "Próba usunięcia nieistniejącego elementu. Stop." <<endl;
+		delete [] tab;
+		exit(-1);
 	}
 	numberOfElems--;
 	if ((((numberOfElems) <= (allocatedSize/2)) && (allocatedSize > SIZE))) {
@@ -395,7 +399,7 @@ T tabn<T>::operator [] (int index) const {
 
 template <class T>
 T tabn<T>::show(int position) {
-	if (position>=numberOfElems) {
+	if (position>=numberOfElems || position<0) {
 		string ex = "WrongIndexException";
 		throw ex;
 	}
@@ -424,6 +428,8 @@ int tabn<T>::aSize(void) {
 		return allocatedSize;
 	}
 
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
 /*! \brief Definiuje sposób testowania wypełniania tablicy tabn

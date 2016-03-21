@@ -1,8 +1,15 @@
 #ifndef _MAIN_HH
 #define _MAIN_HH
 /*!
- * \file
- * \brief Plik posiada wspólne definicje
+ * \file 
+ *
+ */
+#include <iostream>
+using namespace std;
+/*! \mainpage 
+ *
+ *	\section Dokumentacja Dokumentacja klas w repozytorium pamsi.
+ *	Ten dokument zawiera dokumentację klas znajdujących się w plikach repozytorium pamsi.
  *
  */
 

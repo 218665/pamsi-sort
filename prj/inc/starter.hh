@@ -8,6 +8,7 @@
 #include "stoper.hh"
 #include "run.hh"
 #include "tabl.hh"
+#include "lista.hh"
 #include <fstream>
 
 /*!
@@ -24,7 +25,7 @@ public:
 	/*!
 	 * \brief Konstruktor klasy tabn.
 	 */
-	Starter () : runner(new tabn_test), stoper(new Stoper) {
+	Starter () : runner(new lista_test), stoper(new Stoper) {
 	}
 	
 	/*!
