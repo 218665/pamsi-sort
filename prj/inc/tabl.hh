@@ -83,6 +83,11 @@ public:
 	 *\brief Destruktor witrualny interfejsu
 	 */
 	virtual ~Itabn(){}
+	
+	/*!
+	 *\brief Algorytm bubblesort
+	 */
+	 virtual void bubblesort() = 0;
 };
 
 
@@ -232,6 +237,19 @@ public:
 	 *\retval T Element tablicy
 	 */
 	virtual T operator [] (int) const;
+	
+private:
+	/*!
+	 *\brief Zamienia dwa elementy miejscami
+	 *\param position1 indeks pierwszego elementu do zmiany miejscami
+	 *\param position2 indeks drugiego elementu do zmiany miejscami
+	 */
+	 void swap(int,int);
+public:
+	/*!
+	 *\brief Algorytm bubblesort
+	 */
+	 virtual void bubblesort(void);
 };
 
 
@@ -427,6 +445,39 @@ template <class T>
 int tabn<T>::aSize(void) {
 		return allocatedSize;
 	}
+	
+template <class T>
+void tabn<T>::swap(int position1, int position2) {
+	T element1;
+	T element2;
+	element1 = show(position1);
+	element2 = show(position2);
+	tab[position1]=element2;
+	tab[position2]=element1;
+}
+	
+template <class T>
+void tabn<T>::bubblesort (void) {
+	int i,j;
+	for (j = 0; j<(numberOfElems-1);j++) {
+		for (i = 0; i<(numberOfElems-1);i++) {
+			if(tab[i] > tab[i+1]) {
+				swap(i,i+1);
+			}
+		}
+	}
+}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

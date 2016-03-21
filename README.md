@@ -5,6 +5,8 @@
 
 Zadania:
 
+- [x] Bubblesort (umieszczono w tablicy rozszerzalnej)
+
 - [ ] Wymagane poprawki do wyrzucania wyjątków, aby uniknąć wycieków pamieci
 - [ ] Uzupełnienie dokumentacji dotyczącej wyjątków
 - [ ] Umożliwienie obsługi automatycznej zadań w main() w pętli
