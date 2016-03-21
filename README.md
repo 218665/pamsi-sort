@@ -1,6 +1,15 @@
 # pamsi
 
 ####Projektowanie algorytmów i metody sztucznej inteligencji
+######Zajęcia 4
+
+Zadania:
+
+- [ ] Wymagane poprawki do wyrzucania wyjątków, aby uniknąć wycieków pamieci
+- [ ] Uzupełnienie dokumentacji dotyczącej wyjątków
+- [ ] Umożliwienie obsługi automatycznej zadań w main() w pętli
+- [ ] Usunięcie klasy Starter
+
 ######Zajęcia 3
 
 Zadania:
