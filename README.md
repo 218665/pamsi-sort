@@ -5,10 +5,10 @@
 
 Zadania:
 
-- [ ] Lista, stos, kolejka - implementacja.
-- [ ] Doxygen - dokumentacja, wygenerowanie pdf.
-- [ ] Zbadać czas przeszukiwania listy dla 10^1, 10^2, 10^3, 10^6, 10^9 (zbiór za każdym razem inny).
-- [ ] Następne zajęcia - algorytmy sortowania.
+- [x] Lista, stos, kolejka - implementacja.
+- [x] Doxygen - dokumentacja, wygenerowanie pdf.
+- [x] Zbadać czas przeszukiwania listy dla 10^1, 10^2, 10^3, 10^6, 10^9 (zbiór za każdym razem inny).
+- [x] Następne zajęcia - algorytmy sortowania.
 
 
 ######Zajęcia 2
