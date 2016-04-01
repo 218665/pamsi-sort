@@ -228,13 +228,6 @@ int Lista<T>::size(void) {
 
 
 
-
-
-
-
-
-
-
 //------------------------------------------------------------------------------
 
 /*! \brief Definiuje sposób testowania wypełniania listy

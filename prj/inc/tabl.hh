@@ -85,7 +85,8 @@ public:
 	virtual ~Itabn(){}
 	
 	/*!
-	 *\brief Algorytm bubblesort
+	 *\brief Sortowanie elementów tablicy algorytmem sortowania bąbelkowego
+	 *\warning Wymaga typu danych ze zdefiniowanym operatorem porównania "większe od"
 	 */
 	 virtual void bubblesort() = 0;
 };
@@ -247,7 +248,8 @@ private:
 	 void swap(int,int);
 public:
 	/*!
-	 *\brief Algorytm bubblesort
+	 *\brief Sortowanie elementów tablicy algorytmem sortowania bąbelkowego
+	 *\warning Wymaga typu danych ze zdefiniowanym operatorem porównania "większe od"
 	 */
 	 virtual void bubblesort(void);
 };
@@ -270,6 +272,7 @@ void tabn<T>::add (T element, int position) {
 	catch (string ex) {
 		cout << "Exception: " << ex << endl;
 		cout << "Nastapila proba dodania elementu do niewlasciwego miejsca. (Indeks: " << position << ")" << endl;
+		throw ex;
 	}
 	tab[position] = element;
 }
@@ -303,8 +306,7 @@ void tabn<T>::remove() {
 		cout << "Exception: " << ex << endl;
 		//Aby zapobiec zwracaniu niewłaściwej wartości, program zostanie zakończony.
 		cout << "Próba usunięcia nieistniejącego elementu. Stop." <<endl;
-		delete [] tab;
-		exit(-1);
+		throw ex;  //STOP!!!
 	}
 	numberOfElems--;
 	if ((((numberOfElems) <= (allocatedSize/2)) && (allocatedSize > SIZE))) {
