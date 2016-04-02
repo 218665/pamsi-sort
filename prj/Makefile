@@ -1,17 +1,17 @@
 G = g++
 GFLAGS = -Wall -pedantic -g -std=c++11 -Iinc
 ALLFILES = obj/tabl.o obj/run.o src/main.cpp inc/tabl.hh inc/main.hh inc/run.hh inc/stoper.hh \
-	obj/stoper.o inc/starter.hh obj/starter.o inc/lista.hh obj/lista.o inc/stos.hh obj/stos.o \
+	obj/stoper.o inc/except.hh obj/except.o inc/lista.hh obj/lista.o inc/stos.hh obj/stos.o \
 	inc/kolejka.hh obj/kolejka.o
 
 tabl: obj $(ALLFILES)
-	$(G) $(GFLAGS) ./obj/tabl.o ./obj/run.o ./obj/stoper.o ./obj/starter.o obj/lista.o obj/stos.o obj/kolejka.o ./src/main.cpp -o tabl
+	$(G) $(GFLAGS) ./obj/tabl.o ./obj/run.o ./obj/stoper.o ./obj/except.o obj/lista.o obj/stos.o obj/kolejka.o ./src/main.cpp -o tabl
 
 obj:
 	mkdir obj
 
-obj/starter.o: src/starter.cpp inc/starter.hh src/stoper.cpp inc/stoper.hh src/run.cpp inc/run.hh
-	$(G) $(GFLAGS) -c ./src/starter.cpp -o ./obj/starter.o
+obj/except.o: src/except.cpp inc/except.hh src/stoper.cpp inc/stoper.hh src/run.cpp inc/run.hh
+	$(G) $(GFLAGS) -c ./src/except.cpp -o ./obj/except.o
 	
 obj/run.o: src/run.cpp inc/run.hh src/tabl.cpp inc/tabl.hh src/lista.cpp inc/lista.hh src/stos.cpp inc/stos.hh src/kolejka.cpp inc/kolejka.hh
 	$(G) $(GFLAGS) -c ./src/run.cpp -o ./obj/run.o
