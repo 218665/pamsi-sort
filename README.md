@@ -3,7 +3,7 @@
 ####Projektowanie algorytmów i metody sztucznej inteligencji
 ######Zajęcia 5
 
-Użyteczne przykłady znajdują się w pierwszym rozdziale dokumentacji (./dox/latex/refman.pdf).
+Użyteczne przykłady znajdują się w pierwszym rozdziale dokumentacji [./dox/latex/refman.pdf](https://github.com/218582/pamsi/blob/master/dox/latex/refman.pdf).
 
 ######Zajęcia 4
 
