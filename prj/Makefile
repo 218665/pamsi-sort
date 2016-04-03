@@ -10,25 +10,25 @@ tabl: obj $(ALLFILES)
 obj:
 	mkdir obj
 
-obj/except.o: src/except.cpp inc/except.hh src/stoper.cpp inc/stoper.hh src/run.cpp inc/run.hh
+obj/except.o: src/except.cpp inc/except.hh
 	$(G) $(GFLAGS) -c ./src/except.cpp -o ./obj/except.o
 	
 obj/run.o: src/run.cpp inc/run.hh src/tabl.cpp inc/tabl.hh src/lista.cpp inc/lista.hh src/stos.cpp inc/stos.hh src/kolejka.cpp inc/kolejka.hh
 	$(G) $(GFLAGS) -c ./src/run.cpp -o ./obj/run.o
 	
-obj/tabl.o: src/tabl.cpp inc/tabl.hh inc/main.hh
+obj/tabl.o: src/tabl.cpp inc/tabl.hh inc/main.hh inc/except.hh
 	$(G) $(GFLAGS) -c ./src/tabl.cpp -o ./obj/tabl.o
 	
 obj/stoper.o: src/stoper.cpp inc/stoper.hh
 	$(G) $(GFLAGS) -c ./src/stoper.cpp -o ./obj/stoper.o
 	
-obj/lista.o: src/lista.cpp inc/lista.hh inc/tabl.hh inc/main.hh
+obj/lista.o: src/lista.cpp inc/lista.hh inc/tabl.hh inc/main.hh inc/except.hh
 	$(G) $(GFLAGS) -c ./src/lista.cpp -o ./obj/lista.o
 	
-obj/stos.o: src/stos.cpp inc/stos.hh inc/tabl.hh
+obj/stos.o: src/stos.cpp inc/stos.hh inc/tabl.hh inc/except.hh
 	$(G) $(GFLAGS) -c ./src/stos.cpp -o ./obj/stos.o
 
-obj/kolejka.o: src/kolejka.cpp inc/kolejka.hh inc/tabl.hh
+obj/kolejka.o: src/kolejka.cpp inc/kolejka.hh inc/tabl.hh inc/except.hh
 	$(G) $(GFLAGS) -c ./src/kolejka.cpp -o ./obj/kolejka.o
 
 	

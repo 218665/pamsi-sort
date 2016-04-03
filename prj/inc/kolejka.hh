@@ -5,7 +5,7 @@
  *
  */
  #include "tabl.hh"
-using namespace std;
+
 
 /*!
  *\brief Interfejs klasy Kolejka
@@ -130,9 +130,9 @@ T Kolejka<T>::get(void) {
 	try {
 		toRet = tablica->show(0);
 	}
-	catch (string ex) {
-		cout << "Exception: " << ex << endl;
-		cout << "Kolejka pusta. Aby zapobiec zwracaniu niewłaściwej wartości, program zostanie zakończony." << endl;
+	catch (std::string ex) {
+		std::cout << "Exception: " << ex << std::endl;
+		std::cout << "Kolejka pusta. Aby zapobiec zwracaniu niewłaściwej wartości, program zostanie zakończony." << std::endl;
 		delete tablica;
 		exit(-1);
 	}

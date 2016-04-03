@@ -4,34 +4,68 @@
  */
 
 #include <iostream>
-#include "../inc/main.hh"
 using namespace std;
+#include "../inc/main.hh"
+
 
 
 int main (void) {
 
 //Przykład użycia:
-	IRunnable * runner = new lista_test;
-	IStoper * stoper = new Stoper;
-	unsigned int testSize = 100;
-	int testCounter = 5;
-	string outputFile = "file123";
-	for (int i=0; i<testCounter; i++) {
-		try {
-			runner->prepare(testSize);
-			stoper->start();
-			runner->run();
-			stoper->stop();
-			printOnscreen(testSize,stoper);
-			//dumpToFile(outputFile,testSize,stoper);
-			}
-		catch (...) {
-			cout << "EXCEP" << endl;
-		}
-	}
-	delete runner;
-	delete stoper;
+//	IRunnable * runner = new lista_test;
+//	IStoper * stoper = new Stoper;
+//	unsigned int testSize = 100;
+//	string outputFile = "file123";
+//	try {
+//		runner->prepare(testSize);
+//		stoper->start();
+//		runner->run();
+//		stoper->stop();
+//		printOnscreen(testSize,stoper);
+//		dumpToFile(outputFile,testSize,stoper);
+//		}
+//	catch (ContinueException &cex) {
+//		std::cout << "Exception: " << cex.getError() << std::endl;
+//	}
+//	catch (CriticalException & crit_ex) {
+//		std::cout << "Critical: " << crit_ex.getError() << std::endl;
+//		delete stoper;
+//		delete runner;
+//		return -1;
+//	}
+//	catch (...) {
+//		std::cerr << "Unexpected exception!" << std::endl;
+//		delete stoper;
+//		delete runner;
+//		return -1;
+//	}
+//	delete stoper;
+//	delete runner;
 
+	Itabn<int> * tablica = new tabn<int>;
+	try {
+		tablica->add(1,0);
+		tablica->add(2,1);
+		tablica->add(6,1);
+		tablica->showElems();
+	}
+	catch (ContinueException &cex) {
+		std::cout << "Exception: " << cex.getError() << std::endl;
+	}
+	catch (CriticalException & crit_ex) {
+		std::cout << "Critical: " << crit_ex.getError() << std::endl;
+		delete tablica;
+		exit(-1);
+	}
+	catch (...) {
+		std::cerr << "Unexpected exception" << std::endl;
+		delete tablica;
+		exit(-1);
+	}
+	delete tablica;
+	return 0;
+	
+	
 	//test bubblesort
 //	Itabn<int> * tablica = new tabn<int>;
 //	tablica->add(7);

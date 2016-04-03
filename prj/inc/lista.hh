@@ -8,7 +8,6 @@
 #include "tabl.hh"
 #include "main.hh"
 #include <fstream>
-using namespace std;
  
  /*!
   *\brief Interfejs listy
@@ -210,9 +209,9 @@ T Lista<T>::get(int position) {
 	try {
 		toRet = tablica->show(position);
 	}
-	catch (string ex) {
-		cout << "Exception: " << ex << endl;
-		cout << "Proba dostepu do elementu na nieistniejacej pozycji o indeksie " << position << ". Aby zapobiec zwracaniu niewłaściwej wartości, program zostanie zakończony." << endl;;
+	catch (std::string ex) {
+		std::cout << "Exception: " << ex << std::endl;
+		std::cout << "Proba dostepu do elementu na nieistniejacej pozycji o indeksie " << position << ". Aby zapobiec zwracaniu niewłaściwej wartości, program zostanie zakończony." << std::endl;;
 		delete tablica;
 		exit(-1);
 		
@@ -235,16 +234,16 @@ int Lista<T>::size(void) {
  */
 class lista_test : public IRunnable  {
 private:
-	ILista<string> * test;
+	ILista<std::string> * test;
 	int counter = 0;
-	fstream plik;
-	string wordToSearch;
+	std::fstream plik;
+	std::string wordToSearch;
 public:
 	
 	/*!
 	 *\brief Konstruktor klasy testującej
 	 */
-	lista_test () : test(new Lista<string>) {
+	lista_test () : test(new Lista<std::string>) {
 	}
 	
 	/*!
@@ -260,7 +259,7 @@ private:
 	/*!
 	 *\brief Porównywanie słów
 	 */
-	bool wordSearch(string word) {
+	bool wordSearch(std::string word) {
 		int i = 0;
 		while(i<counter) {
 		 	if(test->get(i) == word) {
@@ -284,9 +283,9 @@ public:
 	virtual bool prepare(int sizeOfTest) {
 		counter = sizeOfTest;
 		int i = 0;
-		string word;
+		std::string word;
 		wordToSearch = "reminder";
-		plik.open("dictionary",ios::in);
+		plik.open("largest",std::ios::in);
 		if (plik.good() == true) {
 			while (plik >> word || i<sizeOfTest) {
 				test->add(word);

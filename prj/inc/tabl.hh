@@ -6,12 +6,10 @@
  * \brief Definicja interfejsu Itabn, klasy tabn oraz klasy tabn_test
  */
 #include <iostream>
-#include <exception>
 #include "run.hh"
+#include "except.hh"
 
 #define SIZE 10
-
-using namespace std;
 
 /*!
  * \brief Interfejs klasy tabn
@@ -34,28 +32,28 @@ public:
 	
 	/*!
 	 *\brief Dodaje element w dane miejsce do tablicy, przesuwając wszystkie następne elementy o miejsce w prawo
-	 *\param element - wstawiany element
-	 *\param positionShifted - indeks pola, w które ma być wstawiony element.
+	 *\param element wstawiany element
+	 *\param position indeks pola, w które ma być wstawiony element.
 	 */
 	virtual void add(T,int) = 0;
 	
 	/*!
-	 *\brief Usuwa element z końca tablicy
+	 *\brief Usuwa i zwraca element z końca tablicy
 	 */
-	virtual void remove() = 0;
+	virtual T remove() = 0;
 	
 	/*!
-	 *\brief Usuwa wybrany element z listy
-	 *\param positionShifted - indeks pola, z którego ma być usunięty element.
+	 *\brief Usuwa i zwraca wybrany element z tablicy
+	 *\param position indeks pola, z którego ma być usunięty element.
 	 */
-	virtual void remove(int) = 0;
+	virtual T remove(int) = 0;
 	/*!
 	 *\brief Zwraca żadany element, o ile istnieje
 	 */
 	virtual T show (int) = 0;
 	 
 	/*!
-	 *\brief Wyświetla elementy listy
+	 *\brief Wyświetla elementy tablicy
 	 */
 	virtual void showElems(void) = 0;
 	
@@ -137,24 +135,32 @@ private:
 	 *
 	 * Metoda pozwala na skopiowanie danych do dwa razy mniejszej tablicy i zastąpienie nią
 	 * dotychczasowej.
+	 *
+	 *\exception ContinueException przy próbie zmniejszenia najmniejszej mozliwej tablicy
 	 */
 	void reduce2(void);
 	
 	/*!
 	 *\brief Wyrzuca wyjątek, gdy tablica jest pusta
+	 *
+	 *\exception CriticalException gdy tablica jest pusta
 	 */
 	void isEmptyException (void);
 	
 	/*!
 	 *\brief Przesuwa elementy od pozycji \link positionShifted \endlink w prawo
-	 *\param element - wstawiany element
-	 *\param positionShifted - indeks pola, w które ma być wstawiony element. Elementy po nim następujące zostaną przesunięte o 1 w prawo
+	 *\param element wstawiany element na zadaną pozycję
+	 *\param position indeks pola, w które ma być wstawiony element. Elementy po nim następujące zostaną przesunięte o 1 w prawo
+	 *
+	 *\exception ContinueException przy błędnej pozycji, od której rozpoczęto przesunięcie
 	 */
 	 void shiftRight (T,int);
 	 
 	 /*!
 	 *\brief Przesuwa elementy od pozycji \link positionShifted \endlink w lewo
-	 *\param positionShifted - indeks pola, z którego ma być usuniety element. Elementy po nim następujące zostaną przesunięte o 1 w lewo
+	 *\param position indeks pola, z którego ma być usuniety element. Elementy po nim następujące zostaną przesunięte o 1 w lewo
+	 *
+	 *\exception ContinueException przy błędnej pozycji, od której rozpoczęto przesunięcie
 	 */
 	 void shiftLeft (int);
 	
@@ -181,22 +187,31 @@ public:
 	 *\brief Dodaje element w dane miejsce do tablicy, przesuwając wszystkie następne elementy o miejsce w prawo.
 	 *\param element - wstawiany element
 	 *\param positionShifted - indeks pola, w które ma być wstawiony element.
+	 *
+	 *\exception ContinueException przy próbie dodania elementu do niewłaściwego miejsca.
 	 */
 	virtual void add(T,int);
 	
 	/*!
-	 * \brief Usuwa ostatni element z listy.
+	 * \brief Usuwa i zwraca ostatni element z tablicy.
+	 *
+	 *\exception CriticalException przy próbie usunięcia z pustej tablicy.
 	 */
-	virtual void remove();
+	virtual T remove();
 	
 	/*!
-	 *\brief Usuwa wybrany element z listy, przesuwając wszystkie następne elementy o miejsce w lewo
-	 *\param positionShifted - indeks pola, z którego ma być usunięty element.
+	 *\brief Usuwa i zwraca wybrany element z tablicy, przesuwając wszystkie następne elementy o miejsce w lewo
+	 *\param position indeks pola, z którego ma być usunięty element.
+	 *
+	 *\exception CriticalException przy próbie usunięcia z pustej tablicy lub nieistniejącego elementu.
+	 *\exception ContinueException re-throw reduce2()
 	 */
-	virtual void remove(int);
+	virtual T remove(int);
 	
 	/*!
-	 *\brief Zwraca żadany element, o ile istnieje
+	 *\brief Zwraca żadany element, o ile istnieje, bez jego usuwania
+	 *
+	 *\exception CriticalException przy próbie odczytania z pustej tablicy lub dostępu do nieistniejącego elementu.
 	 */
 	 virtual T show (int);
 
@@ -244,12 +259,16 @@ private:
 	 *\brief Zamienia dwa elementy miejscami
 	 *\param position1 indeks pierwszego elementu do zmiany miejscami
 	 *\param position2 indeks drugiego elementu do zmiany miejscami
+	 *
+	 *\exception CriticalException przy próbie dostępu do pustej tablicy lub nieistniejącego elementu.
 	 */
 	 void swap(int,int);
 public:
 	/*!
 	 *\brief Sortowanie elementów tablicy algorytmem sortowania bąbelkowego
 	 *\warning Wymaga typu danych ze zdefiniowanym operatorem porównania "większe od"
+	 *
+	 *\exception CriticalException re-throw swap(int,int)
 	 */
 	 virtual void bubblesort(void);
 };
@@ -269,19 +288,17 @@ void tabn<T>::add (T element, int position) {
 	try {
 		shiftRight(element,position);
 	}
-	catch (string ex) {
-		cout << "Exception: " << ex << endl;
-		cout << "Nastapila proba dodania elementu do niewlasciwego miejsca. (Indeks: " << position << ")" << endl;
-		throw ex;
+	catch (ContinueException &cex) {
+		std::cerr << "Nastapila proba dodania elementu do niewlasciwego miejsca. (Indeks: " << position << ")" << std::endl;
+		throw;
 	}
-	tab[position] = element;
+	//tab[position] = element;
 }
 
 template <class T>
 void tabn<T>::shiftRight (T element, int positionShifted) {
 	if (positionShifted>numberOfElems) {
-		string ex = "WrongPositionToShiftFromRightException";
-		throw ex;
+		throw ContinueException("WrongPositionToShiftFromRightException");
 	}
 	numberOfElems++;
 	if (((numberOfElems) > allocatedSize))
@@ -298,59 +315,62 @@ void tabn<T>::shiftRight (T element, int positionShifted) {
 }
 
 template <class T>
-void tabn<T>::remove() {
+T tabn<T>::remove() {
+	T temporary;
 	try {
 		isEmptyException();
+		temporary = show(numberOfElems-1);
 	}
-	catch (string ex) {
-		cout << "Exception: " << ex << endl;
-		//Aby zapobiec zwracaniu niewłaściwej wartości, program zostanie zakończony.
-		cout << "Próba usunięcia nieistniejącego elementu. Stop." <<endl;
-		throw ex;  //STOP!!!
+	catch (CriticalException & crit_ex) {
+		std::cerr << "Próba usunięcia nieistniejącego elementu." << std::endl;
+		throw; 
 	}
 	numberOfElems--;
 	if ((((numberOfElems) <= (allocatedSize/2)) && (allocatedSize > SIZE))) {
 		try {
 			reduce2();
 		}
-		catch (string ex) {
-			cout << "Exception: " << ex << endl;
+		catch (ContinueException & cex) {
+			throw;
 		}
 	}
+	return temporary;
 }
 
 template <class T>
-void tabn<T>::remove(int position) {
+T tabn<T>::remove(int position) {
+	T temporary;
 	try {
 		isEmptyException();
+		temporary = show(position);
 	}
-	catch (string ex) {
-		cout << "Exception: " << ex << endl;
+	catch (CriticalException & crit_ex) {
+		std::cerr << "Próba usunięcia nieistniejącego elementu." << std::endl;
+		throw;
 	}
-	
 	try {
-		shiftLeft(position);
+		shiftLeft(position); //Uwaga - shiftLeft dekrementuje numberOfElems.
 	}
-	catch (string ex) {
-		cout << "Exception: " << ex << endl;
-		cout << "Nastapila proba usuniecia elementu z niewlasciwego miejsca. (Indeks: " << position << ")" << endl;
+	catch (ContinueException & cex) {
+		std::cerr << "Nastapila proba usuniecia elementu z niewlasciwego miejsca. (Indeks: " << position << ")" << std::endl;
+		throw;
 	}
-	
 	if ((((numberOfElems) <= (allocatedSize/2)) && (allocatedSize > SIZE))) {
 		try {
 			reduce2();
 		}
-		catch (string ex) {
-			cout << "Exception: " << ex << endl;
+		catch (ContinueException & cex) {
+			throw;
+			
 		}
 	}
+	return temporary;
 }
 
 template <class T>
 void tabn<T>::shiftLeft(int positionShifted) {
 	if (positionShifted>numberOfElems) {
-		string ex = "WrongPositionToShiftFromLeftException";
-		throw ex;
+		throw ContinueException("WrongPositionToShiftFromLeftException");
 	}
 	
 	T* nowy = new T[numberOfElems-positionShifted-1];
@@ -378,8 +398,7 @@ void tabn<T>::expand2(void) {
 template <class T>
 void tabn<T>::reduce2(void) {
 	if(allocatedSize <= SIZE) {
-		string ex = "SmallestTableException";
-		throw ex;
+		throw ContinueException("SmallestTableException");
 	}
 	T* nowy = new T[allocatedSize/2];
 	allocatedSize=allocatedSize/2;
@@ -401,8 +420,7 @@ bool tabn<T>::isEmpty(void) {
 template <class T>
 void tabn<T>::isEmptyException (void) {
 	if (numberOfElems <= 0) {
-		string ex = "EmptyTableException";
-		throw ex;
+		throw CriticalException("EmptyTableException");
 	}
 	else {}
 }
@@ -420,8 +438,7 @@ T tabn<T>::operator [] (int index) const {
 template <class T>
 T tabn<T>::show(int position) {
 	if (position>=numberOfElems || position<0) {
-		string ex = "WrongIndexException";
-		throw ex;
+		throw CriticalException("WrongIndexException");
 	}
 	else {
 		return tab[position];
@@ -431,9 +448,9 @@ T tabn<T>::show(int position) {
 template <class T>
 void tabn<T>::showElems (void) {
 		for (int i=0; i<numberOfElems; i++) {
-			cout << tab[i] << " ";
+			std::cout << tab[i] << " ";
 		}
-		cout << endl;
+		std::cout << std::endl;
 	}
 	
 
@@ -452,8 +469,14 @@ template <class T>
 void tabn<T>::swap(int position1, int position2) {
 	T element1;
 	T element2;
-	element1 = show(position1);
-	element2 = show(position2);
+	try {
+		element1 = show(position1);
+		element2 = show(position2);
+	}
+	catch (CriticalException & crit_ex) {
+		std::cerr << "Próba uzyskania dostępu do nieistniejącego elementu." << std::endl;
+		throw;
+	}
 	tab[position1]=element2;
 	tab[position2]=element1;
 }
@@ -464,7 +487,12 @@ void tabn<T>::bubblesort (void) {
 	for (j = 0; j<(numberOfElems-1);j++) {
 		for (i = 0; i<(numberOfElems-1);i++) {
 			if(tab[i] > tab[i+1]) {
-				swap(i,i+1);
+				try {
+					swap(i,i+1);
+				}
+				catch (CriticalException & crit_ex) {
+					throw;
+				}
 			}
 		}
 	}
@@ -547,14 +575,21 @@ public:
  	 * \link generateRandomDgt() \endlink
  	 *
  	 * \retval bool zawsze true
+ 	 *
+ 	 * \exception ContinueException re-throw tabn::add(int)
 	 */
 	virtual bool run() {
-		for (;counter>0;counter--) {
-			test->add(generateRandomDgt());
+		try {
+			for (;counter>0;counter--) {
+				test->add(generateRandomDgt());
+			}
+		}
+		catch (...) {
+			throw;
 		}
 		//test->showElems();
-		cerr << "SIZE:  " << test->aSize() << endl;
-		cerr << "Elems: " << test->nOE() << endl;
+		std::cout << "SIZE:  " << test->aSize() << std::endl;
+		std::cout << "Elems: " << test->nOE() << std::endl;
 		return true;
 	}
 };

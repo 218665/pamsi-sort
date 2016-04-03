@@ -9,8 +9,6 @@
 #include <iostream>
 
 
-using namespace std;
-
 /*!
  * \brief Interfejs ujednolicający sposób uruchamiania klasy badającej
  * algorytm

@@ -11,7 +11,6 @@
 #include <iostream>
 #include <ctime>
 #include <chrono>
-using namespace std;
 
 /*!
  * \brief Interfejs IStoper
@@ -36,8 +35,8 @@ public:
  */
 class Stoper : public IStoper{
 private:
-	chrono::time_point<chrono::high_resolution_clock> begin, end;
-	chrono::duration<long double> work_time;
+	std::chrono::time_point<std::chrono::high_resolution_clock> begin, end;
+	std::chrono::duration<long double> work_time;
 public:
 
 	/*!

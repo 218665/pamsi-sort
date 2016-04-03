@@ -13,14 +13,14 @@
 #include "stos.hh"
 #include "kolejka.hh"
 
-using namespace std;
 /*! \mainpage 
  *
  *	\section Dokumentacja Dokumentacja klas w repozytorium pamsi.
  *	Ten dokument zawiera dokumentację klas znajdujących się w plikach repozytorium pamsi.
  *
- * \section Przykład Przykład uruchomienia testu
- * \code
+ *  \section Example Przykład uruchomienia testu
+ *
+ * \code{.cpp}
  	IRunnable * runner = new lista_test;
 	IStoper * stoper = new Stoper;
 	unsigned int testSize = 100;
@@ -33,13 +33,50 @@ using namespace std;
 		printOnscreen(testSize,stoper);
 		dumpToFile(outputFile,testSize,stoper);
 		}
-	catch (...) {
-		cout << "EXCEP" << endl;
+	catch (ContinueException &cex) {
+		std::cout << "Exception: " << cex.getError() << std::endl;
 	}
-	delete runner;
+	catch (CriticalException & crit_ex) {
+		std::cout << "Critical: " << crit_ex.getError() << std::endl;
+		delete stoper;
+		delete runner;
+		return -1;
+	}
+	catch (...) {
+		std::cerr << "Unexpected exception!" << std::endl;
+		delete stoper;
+		delete runner;
+		return -1;
+	}
 	delete stoper;
-	\endcode
+	delete runner;
+	
+ *	\endcode
  *
+ *	\section Examples Inne przykłady
+ *	\subsection Example1 Test sortowania bąbelkowego
+ *	
+ *	\code{.cpp}
+ 	Itabn<int> * tablica = new tabn<int>;
+	tablica->add(7);
+	tablica->add(4);
+	tablica->add(1);
+	tablica->add(9);
+	tablica->add(10);
+	tablica->add(94);
+	tablica->add(-4);
+	tablica->add(5);
+	tablica->add(15);
+	tablica->add(8);
+	tablica->add(9);
+	tablica->add(17);
+	tablica->add(19);
+	tablica->showElems();
+	tablica->bubblesort();
+	tablica->showElems();
+	delete tablica;
+	
+ *	\endcode
  */
 
 /*!
@@ -49,7 +86,7 @@ using namespace std;
  *\param testsize rozmiar testu 
  *\param stoper klasa stopera
  */
-void dumpToFile (string, unsigned int, IStoper *);
+void dumpToFile (std::string, unsigned int, IStoper *);
 
 /*!
  *\brief Wyświetla wynik na standardowym wyjściu

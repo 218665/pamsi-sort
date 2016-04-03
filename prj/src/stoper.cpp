@@ -1,5 +1,5 @@
 #include "../inc/stoper.hh"
-
+using namespace std;
 
 void Stoper::start(void) {
 	begin = chrono::high_resolution_clock::now();

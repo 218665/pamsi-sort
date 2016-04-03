@@ -6,7 +6,6 @@
  *
  */
  #include "tabl.hh"
- using namespace std;
 
  /*!
   *\brief Interfejs stosu
@@ -153,9 +152,9 @@ T Stos<T>::get(void) {
 	try {
 		toRet = tablica->show((tablica->nOE())-1);
 	}
-	catch (string ex) {
-		cout << "Exception: " << ex << endl;
-		cout << "Stos pusty. Aby zapobiec zwracaniu niewłaściwej wartości, program zostanie zakończony." << endl;
+	catch (std::string ex) {
+		std::cout << "Exception: " << ex << std::endl;
+		std::cout << "Stos pusty. Aby zapobiec zwracaniu niewłaściwej wartości, program zostanie zakończony." << std::endl;
 		delete tablica;
 		exit(-1);
 	}
