@@ -6,8 +6,8 @@
 Zadania:
 
 - [x] Bubblesort (umieszczono w tablicy rozszerzalnej)
-- [ ] Wymagane poprawki do wyrzucania wyjątków, aby uniknąć wycieków pamieci
-- [ ] Uzupełnienie dokumentacji dotyczącej wyjątków
+- [x] Wymagane poprawki do wyrzucania wyjątków, aby uniknąć wycieków pamieci
+- [x] Uzupełnienie dokumentacji dotyczącej wyjątków
 - [x] Umożliwienie obsługi automatycznej zadań w main() w pętli
 - [x] Usunięcie klasy Starter
 

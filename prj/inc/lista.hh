@@ -6,7 +6,6 @@
  *
  */
 #include "tabl.hh"
-#include "main.hh"
 #include <fstream>
  
  /*!
@@ -22,7 +21,7 @@ public:
 	 *
 	 * Jeśli następuje próba dodania elementu w miejscu istniejącego, następuje przesunięcie następujących po nim
 	 * elementów na następne pozycje
-	 * \note Próba dodania elementu na miejsce dalsze niż pierwsze następujące po obecnie istniejącym spowoduje wyrzucenie wyjątku i niewykonanie akcji.
+	 * \note Próba dodania elementu na miejsce dalsze niż pierwsze następujące po obecnie istniejącym spowoduje wyrzucenie wyjątku.
 	 */
 	virtual void add(T, int) = 0;
 	
@@ -37,8 +36,7 @@ public:
 	 * Jeśli usunięcie następuje w środku listy, następujące po usuwanym elementy są przesuwane
 	 * o jedną pozycję wcześniej.
 	 * \retval T Usunięty element
-	 * \warning Próba usunięcia elementu nieistniejącego lub z pustej listy spowoduje wyrzucenie wyjątku, zakończenie programu
-	 * \warning i zwrócenie -1.
+	 * \warning Próba usunięcia elementu nieistniejącego lub z pustej listy spowoduje wyrzucenie wyjątku.
 	 * \warning Sprawdź dokumentację metody Lista<T>::remove(int).
 	 */
 	virtual T remove(int) = 0;
@@ -58,8 +56,7 @@ public:
 	/*!
 	 *\brief Zwraca element z zadanego miejsca bez usunięcia
 	 *\retval T element w zadanym miejscu
-	 * \warning Próba podglądu elementu nieistniejącego spowoduje wyrzucenie wyjątku, zakończenie programu
-	 * \warning i zwrócenie -1.
+	 * \warning Próba podglądu elementu nieistniejącego spowoduje wyrzucenie wyjątku.
 	 * \warning Sprawdź dokumentację metody Lista<T>::get(int).
 	 */
 	virtual T get(int) = 0;
@@ -96,7 +93,9 @@ public:
 	 *
 	 * Jeśli następuje próba dodania elementu w miejscu istniejącego, następuje przesunięcie następujących po nim
 	 * elementów na następne pozycje
-	 * \note Próba dodania elementu na miejsce dalsze niż pierwsze następujące po obecnie istniejącym spowoduje wyrzucenie wyjątku i niewykonanie akcji.
+	 *
+	 * \exception ContinueException re-throw z tabn<T>::add(T,int)
+	 * \note Próba dodania elementu na miejsce dalsze niż pierwsze następujące po obecnie istniejącym spowoduje wyrzucenie wyjątku.
 	 */
 	virtual void add (T,int);
 	
@@ -111,8 +110,10 @@ public:
 	 * Jeśli usunięcie następuje w środku listy, następujące po usuwanym elementy są przesuwane
 	 * o jedną pozycję wcześniej.
 	 * \retval T Usunięty element
-	 * \warning Próba usunięcia elementu nieistniejącego lub z pustej listy spowoduje wyrzucenie wyjątku, zakończenie programu
-	 * \warning i zwrócenie -1. Najpierw sprawdź, czy dany element istnieje a następnie usuń element.
+	 * \exception CriticalException re-throw z tabn<T>::remove()
+	 * \exception ContinueException re-throw z tabn<T>::remove()
+	 * \warning Próba usunięcia elementu nieistniejącego lub z pustej listy spowoduje wyrzucenie wyjątku.
+	 * \warning Przykład sprawdzenia:
 	 * \warning
 	 	\code{.cpp}
 	 	//Przykład sprawdzenia poprawności usuwania
@@ -143,8 +144,9 @@ public:
 	/*!
 	 *\brief Zwraca element z zadanego miejsca bez usunięcia
 	 *\retval T element w zadanym miejscu
-	 * \warning Próba podglądu elementu nieistniejącego spowoduje wyrzucenie wyjątku, zakończenie programu
-	 * \warning i zwrócenie -1. Najpierw sprawdź, czy dany element istnieje.
+	 *\exception CriticalException re-throw z tab<T>::show(int)
+	 * \warning Próba podglądu elementu nieistniejącego spowoduje wyrzucenie wyjątku.
+	 * \warning Przykład sprawdzenia:
 	 * \warning
 	 	\code{.cpp}
 	 	//Przykład sprawdzenia poprawności podglądu
@@ -176,7 +178,12 @@ public:
 
 template <class T>
 void Lista<T>::add(T element, int position) {
+	try {
 		tablica->add(element,position);
+	}
+	catch (...) {
+		throw;
+	}
 }
 
 template <class T>
@@ -186,16 +193,19 @@ void Lista<T>::add(T element) {
 
 template <class T>
 T Lista<T>::remove(int position) {
-	T toRet = get(position);
-	tablica->remove(position);
-	return toRet;
+	T temporary;
+	try {
+		temporary = tablica->remove(position);
+	}
+	catch (...) {
+		throw;
+	}
+	return temporary;
 }
 
 template <class T>
 T Lista<T>::remove(void) {
-	T toRet = get((tablica->nOE())-1);
-	tablica->remove((tablica->nOE())-1);
-	return toRet;
+	return tablica->remove((tablica->nOE())-1);
 }
 
 template <class T>
@@ -205,18 +215,14 @@ bool Lista<T>::isEmpty(void) {
 
 template <class T>
 T Lista<T>::get(int position) {
-	T toRet;
+	T temporary;
 	try {
-		toRet = tablica->show(position);
+		temporary = tablica->show(position);
 	}
-	catch (std::string ex) {
-		std::cout << "Exception: " << ex << std::endl;
-		std::cout << "Proba dostepu do elementu na nieistniejacej pozycji o indeksie " << position << ". Aby zapobiec zwracaniu niewłaściwej wartości, program zostanie zakończony." << std::endl;;
-		delete tablica;
-		exit(-1);
-		
+	catch (...) {
+		throw;
 	}
-	return toRet;
+	return temporary;
 }
 
 template <class T>
@@ -242,6 +248,7 @@ public:
 	
 	/*!
 	 *\brief Konstruktor klasy testującej
+	 *
 	 */
 	lista_test () : test(new Lista<std::string>) {
 	}
@@ -258,17 +265,23 @@ private:
 
 	/*!
 	 *\brief Porównywanie słów
+	 *\exception CriticalException re-throw z Lista::get(int)
 	 */
 	bool wordSearch(std::string word) {
 		int i = 0;
-		while(i<counter) {
-		 	if(test->get(i) == word) {
-		 		//cout << "Word found at position " << i <<endl;
-		 		return true;
-		 	}
-		 	i+=1;
-		}
+		try {
+			while(i<counter) {
+			 	if(test->get(i) == word) {
+			 		//cout << "Word found at position " << i <<endl;
+			 		return true;
+			 	}
+			 	i+=1;
+			}
 		//cout << "Word not found"<< endl << endl;
+		}
+		catch (...) {
+			throw;
+		}
 		return false;
 	}
 
@@ -279,6 +292,7 @@ public:
  	 * \param sizeOfTest - rozmiar testu
  	 * \retval true gdy plik ze słownikiem został pomyślnie otwarty
  	 * \retval false gdy otwieranie pliku zakończyło się błędem
+ 	 * \exception CriticalException gdy wystąpił błąd przy otwarciu pliku
 	 */
 	virtual bool prepare(int sizeOfTest) {
 		counter = sizeOfTest;
@@ -291,12 +305,15 @@ public:
 				test->add(word);
 				i+=1;
 			}
-			//cout << "FND at: " << i << endl;
+			//cout << "Found at: " << i << endl;
+			plik.close();
 			return true;
 		}
-		else
-			return false;
-		
+		else {
+			plik.close();
+			throw CriticalException("FileError");
+		}
+		return false;
 	}
 	
 	/*!
@@ -304,11 +321,17 @@ public:
  	 *
  	 * Pozwala na wykonanie testu.
  	 *
- 	 * \retval true zawsze
+ 	 * \retval true gdy test zakończył się sukcesem
+ 	 * \retval false gdy test zakończył się niepomyślnie
+ 	 * \exception CriticalException re-throw z lista_test::wordSearch(std::string)
 	 */
 	virtual bool run() {
-		wordSearch(wordToSearch);
-		return true;
+		try {
+			return wordSearch(wordToSearch);
+		}
+		catch (...) {
+			throw;
+		}
 	}
 	
 };

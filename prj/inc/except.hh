@@ -13,12 +13,11 @@
  *\brief Ogólny wyjątek
  */
 class Exception {
-public:
+protected:
 	std::string cause;
 
-	Exception() {}
-	
-    Exception(std::string description) : cause(description) {
+public:
+    Exception(std::string description) : cause(description){
     }
     
     std::string getError() {
@@ -31,33 +30,27 @@ public:
  */
 class CriticalException : public Exception {
 public:
-	std::string cause;
-private:
-	//CriticalException() {}
-public:
-	CriticalException(std::string description) : cause(description) {
+	
+	CriticalException() : Exception("none") {
+	}
+	
+	CriticalException(std::string description) : Exception(description) {
     }
-    
-    std::string getError() {
-    	return cause;
-    }
+
 };
 
 /*!
- *\brief Wyjątek, który mimo pojawienia się, pozwala na dalsze poprawne działanie programu
+ *\brief Wyjątek, który może spowodować nieprzewidziane działanie programu, ale program mógłby dalej działać.
  */
- class ContinueException : public Exception {
- public:
-	std::string cause;
- private:
- 	//ContinueException() {}
- public:
- 	ContinueException(std::string description) : cause(description) {
+class ContinueException : public Exception {
+public:
+
+	ContinueException() : Exception("none") {
+	}
+	
+ 	ContinueException(std::string description) : Exception(description) {
     }
-    
-    std::string getError() {
-    	return cause;
-    }
+
  };
 
 

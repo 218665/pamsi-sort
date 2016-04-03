@@ -17,15 +17,11 @@ class IRunnable {
 public:
 	/*!
 	 * \brief Przygotowanie badań
-	 *
-	 *\retval true zawsze 
 	 */
 	virtual bool prepare (int) = 0;
 	
 	/*!
 	 * \brief Przeprowadzanie badań
-	 *
-	 *\retval true zawsze
 	 */
 	virtual bool run () = 0;
 	

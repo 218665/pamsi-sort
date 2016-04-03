@@ -188,14 +188,16 @@ public:
 	 *\param element - wstawiany element
 	 *\param positionShifted - indeks pola, w które ma być wstawiony element.
 	 *
-	 *\exception ContinueException przy próbie dodania elementu do niewłaściwego miejsca.
+	 *\exception ContinueException WrongPositionToShiftFromRightException przy próbie dodania elementu do niewłaściwego miejsca (re-throw z tabn<T>::shiftRight(T,int)).
 	 */
 	virtual void add(T,int);
 	
 	/*!
 	 * \brief Usuwa i zwraca ostatni element z tablicy.
 	 *
-	 *\exception CriticalException przy próbie usunięcia z pustej tablicy.
+	 **\exception CriticalException EmptyTableException przy próbie usunięcia z pustej tablicy (re-throw z tabn<T>::isEmptyException()).
+	 *\exception CriticalException WrongIndexException przy próbie usunięcia z pustej tablicy (re-throw z tabn<T>::show(int)).
+	 *\exception ContinueException re-throw z tabn<T>::reduce2().
 	 */
 	virtual T remove();
 	
@@ -203,15 +205,16 @@ public:
 	 *\brief Usuwa i zwraca wybrany element z tablicy, przesuwając wszystkie następne elementy o miejsce w lewo
 	 *\param position indeks pola, z którego ma być usunięty element.
 	 *
-	 *\exception CriticalException przy próbie usunięcia z pustej tablicy lub nieistniejącego elementu.
-	 *\exception ContinueException re-throw reduce2()
+	 *\exception CriticalException EmptyTableException przy próbie usunięcia z pustej tablicy lub nieistniejącego elementu (re-throw z tabn<T>::isEmptyException()).
+	 *\exception CriticalException WrongIndexException przy próbie usunięcia z pustej tablicy lub nieistniejącego elementu (re-throw z tabn<T>::show(int)).
+	 *\exception ContinueException re-throw z tabn<T>::reduce2().
 	 */
 	virtual T remove(int);
 	
 	/*!
-	 *\brief Zwraca żadany element, o ile istnieje, bez jego usuwania
+	 *\brief Zwraca żądany element, o ile istnieje, bez jego usuwania
 	 *
-	 *\exception CriticalException przy próbie odczytania z pustej tablicy lub dostępu do nieistniejącego elementu.
+	 *\exception CriticalException WrongIndexException przy próbie odczytania z pustej tablicy lub dostępu do nieistniejącego elementu.
 	 */
 	 virtual T show (int);
 
@@ -260,7 +263,7 @@ private:
 	 *\param position1 indeks pierwszego elementu do zmiany miejscami
 	 *\param position2 indeks drugiego elementu do zmiany miejscami
 	 *
-	 *\exception CriticalException przy próbie dostępu do pustej tablicy lub nieistniejącego elementu.
+	 *\exception CriticalException WrongIndexException przy próbie dostępu do pustej tablicy lub nieistniejącego elementu (re-throw z tabn<T>::show(int))
 	 */
 	 void swap(int,int);
 public:
@@ -268,7 +271,7 @@ public:
 	 *\brief Sortowanie elementów tablicy algorytmem sortowania bąbelkowego
 	 *\warning Wymaga typu danych ze zdefiniowanym operatorem porównania "większe od"
 	 *
-	 *\exception CriticalException re-throw swap(int,int)
+	 *\exception CriticalException re-throw z tabn<T>::swap(int,int)
 	 */
 	 virtual void bubblesort(void);
 };
@@ -576,7 +579,7 @@ public:
  	 *
  	 * \retval bool zawsze true
  	 *
- 	 * \exception ContinueException re-throw tabn::add(int)
+ 	 * \exception ContinueException re-throw tabn<T>::add(int)
 	 */
 	virtual bool run() {
 		try {
@@ -587,7 +590,6 @@ public:
 		catch (...) {
 			throw;
 		}
-		//test->showElems();
 		std::cout << "SIZE:  " << test->aSize() << std::endl;
 		std::cout << "Elems: " << test->nOE() << std::endl;
 		return true;

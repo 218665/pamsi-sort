@@ -36,7 +36,7 @@ public:
 	
 	/*!
 	 *\brief Zwraca element z początku kolejki bez usuwania
-	 *\warning Uwaga! Próba podglądu elementu z pustej kolejki spowoduje wyrzucenie wyjątku, zamknięcie programu i zwrócenie -1. 
+	 *\warning Uwaga! Próba podglądu elementu z pustej kolejki spowoduje wyrzucenie wyjątku
 	 *\warning Sprawdź dokumentację metody Kolejka<T>::get(void).
 	 */
 	virtual T get(void) = 0;
@@ -70,6 +70,8 @@ public:
 	/*!
 	 *\brief Usuwa i zwraca element z początku kolejki
 	 *\retval T element z początku kolejki
+	 *\exception CriticalException re-throw z tabn<T>::remove()
+	 *\exception ContinueException re-throw z tabn<T>::remove()
 	 */
 	virtual T dequeue(void);
 	
@@ -83,9 +85,10 @@ public:
 	/*!
 	 *\brief Zwraca element z początku kolejki bez usuwania
 	 *
-	 *\warning Uwaga! Próba odczytania elementu z pustej kolejki spowoduje wyrzucenie wyjątku, zamknięcie programu i zwrócenie -1. 
-	 *\warning Aby zapewnić poprawne działanie, sprawdź najpierw, czy kolejka nie jest pusta i uwarunkuj od tego wykonanie funkcji get().
-	 *\warning Przykład:
+	 *\retval T element z początku kolejki
+	 *\exception CriticalException re-throw z tab::show(int)
+	 *\warning Uwaga! Próba odczytania elementu z pustej kolejki spowoduje wyrzucenie wyjątku.
+	 *\warning Przykład sprawdzenia:
 	 *\code{.cpp}
 	 	//Przykład korzystania z get()
 	 	IKolejka<int> * kolejka = new Kolejka<int>;
@@ -114,9 +117,14 @@ void Kolejka<T>::enqueue(T element) {
 
 template <class T>
 T Kolejka<T>::dequeue(void) {
-	T toRet = get();
-	tablica->remove(0);
-	return toRet;
+	T temporary;
+	try {
+		temporary = tablica->remove(0);
+	}
+	catch (...) {
+		throw;
+	}
+	return temporary;
 }
 
 template <class T>
@@ -126,17 +134,14 @@ bool Kolejka<T>::isEmpty(void) {
 
 template <class T>
 T Kolejka<T>::get(void) {
-	T toRet;
+	T temporary;
 	try {
-		toRet = tablica->show(0);
+		temporary = tablica->show(0);
 	}
-	catch (std::string ex) {
-		std::cout << "Exception: " << ex << std::endl;
-		std::cout << "Kolejka pusta. Aby zapobiec zwracaniu niewłaściwej wartości, program zostanie zakończony." << std::endl;
-		delete tablica;
-		exit(-1);
+	catch (...) {
+		throw;
 	}
-	return toRet;
+	return temporary;
 }
 
 

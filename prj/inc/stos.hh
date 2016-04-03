@@ -26,7 +26,7 @@ public:
 	 *\brief Zdejmuje element ze szczytu stosu
 	 *
 	 * \retval T element ze szczytu stosu
-	 *\warning Uwaga! Próba zdjęcia elementu z pustego stosu spowoduje wyrzucenie wyjątku, zamknięcie programu i zwrócenie -1. 
+	 *\warning Uwaga! Próba zdjęcia elementu z pustego stosu spowoduje wyrzucenie wyjątku 
 	 *\warning Sprawdź dokumentację metody Stos<T>::pull(void).
 	 */
 	virtual T pull(void) = 0;
@@ -42,7 +42,7 @@ public:
 	 *\brief Zwraca element ze szczytu stosu bez jego usuwania
 	 *
 	 *\retval T element ze szczytu stosu
-	 *\warning Uwaga! Próba odczytania elementu z pustego stosu spowoduje wyrzucenie wyjątku, zamknięcie programu i zwrócenie -1. 
+	 *\warning Uwaga! Próba odczytania elementu z pustego stosu spowoduje wyrzucenie wyjątku 
 	 *\warning Sprawdź dokumentację metody Stos<T>::get(void).
 	 */
 	virtual T get(void) = 0;
@@ -80,9 +80,11 @@ public:
 	 *\brief Zdejmuje element ze szczytu stosu
 	 *
 	 * \retval T element ze szczytu stosu
-	 *\warning Uwaga! Próba zdjęcia elementu z pustego stosu spowoduje wyrzucenie wyjątku, zamknięcie programu i zwrócenie -1. 
-	 *\warning Aby zapewnić poprawne działanie, sprawdź najpierw, czy stos nie jest pusty i uwarunkuj od tego wykonanie funkcji pull().
-	 *\warning Przykład:
+	 * \exception CriticalException re-throw z tabn<T>::remove()
+	 * \exception ContinueException re-throw z tabn<T>::remove()
+	 *
+	 *\warning Uwaga! Próba zdjęcia elementu z pustego stosu spowoduje wyrzucenie wyjątku
+	 *\warning Przykład sprawdzenia:
 	 *\code{.cpp}
 	 	//Przykład korzystania z get()
 	 	IStos<int> * stos = new Stos<int>;
@@ -106,9 +108,9 @@ public:
 	 *\brief Zwraca element ze szczytu stosu bez jego usuwania
 	 *
 	 *\retval T element ze szczytu stosu
-	 *\warning Uwaga! Próba odczytania elementu z pustego stosu spowoduje wyrzucenie wyjątku, zamknięcie programu i zwrócenie -1. 
-	 *\warning Aby zapewnić poprawne działanie, sprawdź najpierw, czy stos nie jest pusty i uwarunkuj od tego wykonanie funkcji get().
-	 *\warning Przykład:
+	 *\exception CriticalException re-throw z tabn<T>::show(int)
+	 *\warning Uwaga! Próba odczytania elementu z pustego stosu spowoduje wyrzucenie wyjątku 
+	 *\warning Przykład sprawdzenia:
 	 *\code{.cpp}
 	 	//Przykład korzystania z get()
 	 	IStos<int> * stos = new Stos<int>;
@@ -136,9 +138,14 @@ void Stos<T>::push(T element) {
 
 template <class T>
 T Stos<T>::pull(void) {
-	T toRet = get();
-	tablica->remove();
-	return toRet;
+	T temporary;
+	try {
+		tablica->remove();
+	}
+	catch (...) {
+		throw;
+	}
+	return temporary;
 }
 
 template <class T>
@@ -148,17 +155,14 @@ bool Stos<T>::isEmpty(void) {
 
 template <class T>
 T Stos<T>::get(void) {
-	T toRet;
+	T temporary;
 	try {
-		toRet = tablica->show((tablica->nOE())-1);
+		temporary = tablica->show((tablica->nOE())-1);
 	}
-	catch (std::string ex) {
-		std::cout << "Exception: " << ex << std::endl;
-		std::cout << "Stos pusty. Aby zapobiec zwracaniu niewłaściwej wartości, program zostanie zakończony." << std::endl;
-		delete tablica;
-		exit(-1);
+	catch (...) {
+		throw;
 	}
-	return toRet;
+	return temporary;
 }
 
 #endif

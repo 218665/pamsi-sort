@@ -12,58 +12,63 @@ using namespace std;
 int main (void) {
 
 //Przykład użycia:
-//	IRunnable * runner = new lista_test;
-//	IStoper * stoper = new Stoper;
-//	unsigned int testSize = 100;
-//	string outputFile = "file123";
-//	try {
-//		runner->prepare(testSize);
-//		stoper->start();
-//		runner->run();
-//		stoper->stop();
-//		printOnscreen(testSize,stoper);
-//		dumpToFile(outputFile,testSize,stoper);
-//		}
-//	catch (ContinueException &cex) {
-//		std::cout << "Exception: " << cex.getError() << std::endl;
-//	}
-//	catch (CriticalException & crit_ex) {
-//		std::cout << "Critical: " << crit_ex.getError() << std::endl;
-//		delete stoper;
-//		delete runner;
-//		return -1;
-//	}
-//	catch (...) {
-//		std::cerr << "Unexpected exception!" << std::endl;
-//		delete stoper;
-//		delete runner;
-//		return -1;
-//	}
-//	delete stoper;
-//	delete runner;
-
-	Itabn<int> * tablica = new tabn<int>;
+	IRunnable * runner = new lista_test;
+	IStoper * stoper = new Stoper;
+	unsigned int testSize = 100;
+	string outputFile = "file123";
 	try {
-		tablica->add(1,0);
-		tablica->add(2,1);
-		tablica->add(6,1);
-		tablica->showElems();
-	}
+		runner->prepare(testSize);
+		stoper->start();
+		runner->run();
+		stoper->stop();
+		printOnscreen(testSize,stoper);
+		dumpToFile(outputFile,testSize,stoper);
+		}
 	catch (ContinueException &cex) {
 		std::cout << "Exception: " << cex.getError() << std::endl;
+		delete stoper;
+		delete runner;
+		return -1;
 	}
 	catch (CriticalException & crit_ex) {
 		std::cout << "Critical: " << crit_ex.getError() << std::endl;
-		delete tablica;
-		exit(-1);
+		delete stoper;
+		delete runner;
+		return -2;
 	}
 	catch (...) {
-		std::cerr << "Unexpected exception" << std::endl;
-		delete tablica;
-		exit(-1);
+		std::cerr << "Unexpected exception!" << std::endl;
+		delete stoper;
+		delete runner;
+		return -3;
 	}
-	delete tablica;
-	return 0;
+	delete stoper;
+	delete runner;
+
+//	Itabn<int> * tablica = new tabn<int>;
+//	try {
+//		tablica->add(1,0);
+//		tablica->add(2,1);
+//		tablica->add(6,1);
+//		tablica->add(10,10);
+//	}
+//	catch (ContinueException &cex) {
+//		std::cout << "Exception: " << cex.getError() << std::endl;
+//		delete tablica;
+//		exit(-1);
+//	}
+//	catch (CriticalException & crit_ex) {
+//		std::cout << "Critical: " << crit_ex.getError() << std::endl;
+//		delete tablica;
+//		exit(-2);
+//	}
+//	catch (...) {
+//		std::cerr << "Unexpected exception!" << std::endl;
+//		delete tablica;
+//		exit(-3);
+//	}
+//	delete tablica;
+//	return 0;
 	
 	
 	//test bubblesort
@@ -87,12 +92,20 @@ int main (void) {
 }
 
 
+
+
+//--------------------------------------------------------------------------------------
+
 void dumpToFile (string nameOfFile, unsigned int testsize, IStoper * stoper) {
 	fstream file;
 	file.open(nameOfFile, ios::app);
 	if (file.good()) {
 		file << to_string(testsize) << " ";
 		file << to_string(stoper->getElapsedTimeMs()) << endl;
+	}
+	else {
+		file.close();
+		throw CriticalException("FileError");
 	}
 	file.close();
 }
