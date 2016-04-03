@@ -1,6 +1,10 @@
 # pamsi
 
 ####Projektowanie algorytmów i metody sztucznej inteligencji
+######Zajęcia 5
+
+Użyteczne przykłady znajdują się w pierwszym rozdziale dokumentacji (./dox/latex/refman.pdf).
+
 ######Zajęcia 4
 
 Zadania:

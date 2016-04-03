@@ -20,7 +20,10 @@
  *
  *  \section Example Przykład uruchomienia testu
  *
+ * 	
+ *
  * \code{.cpp}
+ 	//Poniższy test wymaga, aby w folderze projektu znajdował się słownik o nazwie zadanej w metodzie virtual bool lista_test::prepare(int) . Należy dokonać edycji w/w metody w celu zmian. Trawją prace nad rozwiązaniem problemu.
  	IRunnable * runner = new lista_test;
 	IStoper * stoper = new Stoper;
 	unsigned int testSize = 100;
@@ -77,6 +80,73 @@
 	delete tablica;
 	
  *	\endcode
+ *
+ *  \subsection Example2 Test obsługi wyjątków
+ *
+ * W poniższym teście powinien wystąpić wyjątek, związany z próbą dodania elementu o indeksie 10, gdy tablica dynamicznie rozszerzalna ma 3 elementy (czyli gdy maksymalny indeks to 2).
+ *
+ *  \code{.cpp}
+ 	Itabn<int> * tablica = new tabn<int>;
+	try {
+		tablica->add(1,0);
+		tablica->add(2,1);
+		tablica->add(6,1);
+		tablica->add(10,10);
+	}
+	catch (ContinueException &cex) {
+		std::cout << "Exception: " << cex.getError() << std::endl;
+		delete tablica;
+		exit(-1);
+	}
+	catch (CriticalException & crit_ex) {
+		std::cout << "Critical: " << crit_ex.getError() << std::endl;
+		delete tablica;
+		exit(-2);
+	}
+	catch (...) {
+		std::cerr << "Unexpected exception!" << std::endl;
+		delete tablica;
+		exit(-3);
+	}
+	delete tablica;
+	return 0;
+ *	\endcode
+ *	
+ *	\subsection Example3 Obsługa stosu
+ *	
+ *	\code{.cpp}
+	//Wykorzystanie stosu
+	IStos<int> * stos = new Stos<int>;
+	try{
+		stos->push(4);
+		stos->push(3);
+		cout << "TOP: " << stos->pop() << endl; //Powinno być 3
+		cout << "TOP: " << stos->get() << endl; //Powinno być 4
+		stos->pop();
+		if (stos->isEmpty()) cout << "Stos pusty!" << endl; //wykona się
+		cout << "----------------" << endl;
+		stos->pop(); //Wyrzuci wyjątek
+	}
+	catch (ContinueException &cex) {
+		std::cout << "Exception: " << cex.getError() << std::endl;
+		delete stos;
+		exit(-1);
+	}
+	catch (CriticalException & crit_ex) {
+		std::cout << "Critical: " << crit_ex.getError() << std::endl;
+		delete stos;
+		exit(-2);
+	}
+	catch (...) {
+		std::cerr << "Unexpected exception!" << std::endl;
+		delete stos;
+		exit(-3);
+	}
+	delete stos;
+	return 0;
+ *	\endcode
+ *
+	
  */
 
 /*!

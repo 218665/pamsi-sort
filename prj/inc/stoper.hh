@@ -22,7 +22,6 @@ public:
 	virtual void start(void) = 0;
 	virtual void stop(void) = 0;
 	virtual long double getElapsedTimeMs(void) = 0;
-//	virtual void dumpToFile(string) = 0;
 	virtual ~IStoper (){}
 };
 

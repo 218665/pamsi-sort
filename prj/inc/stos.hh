@@ -27,9 +27,9 @@ public:
 	 *
 	 * \retval T element ze szczytu stosu
 	 *\warning Uwaga! Próba zdjęcia elementu z pustego stosu spowoduje wyrzucenie wyjątku 
-	 *\warning Sprawdź dokumentację metody Stos<T>::pull(void).
+	 *\warning Sprawdź dokumentację metody Stos<T>::pop(void).
 	 */
-	virtual T pull(void) = 0;
+	virtual T pop(void) = 0;
 	
 	/*!
 	 *\brief Sprawdza, czy stos jest pusty
@@ -89,13 +89,13 @@ public:
 	 	//Przykład korzystania z get()
 	 	IStos<int> * stos = new Stos<int>;
 	 	if (stos->isEmpty() == false) {
-			cout << stos->pull() << endl;
+			cout << stos->pop() << endl;
 			}
 		else
 			cerr << "Stos pusty" << endl;
 		\endcode
 	 */
-	virtual T pull(void);
+	virtual T pop(void);
 	
 	/*!
 	 *\brief Sprawdza, czy stos jest pusty
@@ -137,10 +137,10 @@ void Stos<T>::push(T element) {
 }
 
 template <class T>
-T Stos<T>::pull(void) {
+T Stos<T>::pop(void) {
 	T temporary;
 	try {
-		tablica->remove();
+		temporary = tablica->remove();
 	}
 	catch (...) {
 		throw;
