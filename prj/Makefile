@@ -2,10 +2,10 @@ G = g++
 GFLAGS = -Wall -pedantic -g -std=c++11 -Iinc
 ALLFILES = obj/tabl.o obj/run.o src/main.cpp inc/tabl.hh inc/main.hh inc/run.hh inc/stoper.hh \
 	obj/stoper.o inc/except.hh obj/except.o inc/lista.hh obj/lista.o inc/stos.hh obj/stos.o \
-	inc/kolejka.hh obj/kolejka.o
+	inc/kolejka.hh obj/kolejka.o obj/QSTest.o
 
 tabl: obj $(ALLFILES)
-	$(G) $(GFLAGS) ./obj/tabl.o ./obj/run.o ./obj/stoper.o ./obj/except.o obj/lista.o obj/stos.o obj/kolejka.o ./src/main.cpp -o tabl
+	$(G) $(GFLAGS) ./obj/tabl.o ./obj/run.o ./obj/stoper.o ./obj/except.o obj/lista.o obj/stos.o obj/kolejka.o obj/QSTest.o ./src/main.cpp -o tabl
 
 obj:
 	mkdir obj
@@ -31,7 +31,8 @@ obj/stos.o: src/stos.cpp inc/stos.hh inc/tabl.hh inc/except.hh
 obj/kolejka.o: src/kolejka.cpp inc/kolejka.hh inc/tabl.hh inc/except.hh
 	$(G) $(GFLAGS) -c ./src/kolejka.cpp -o ./obj/kolejka.o
 
-	
+obj/QSTest.o: src/QSTest.cpp inc/QSTest.hh inc/tabl.hh inc/except.hh
+	$(G) $(GFLAGS) -c ./src/QSTest.cpp -o ./obj/QSTest.o
 clean:
 	rm -fr ./obj/*.o tabl
 	

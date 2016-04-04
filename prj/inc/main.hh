@@ -12,7 +12,7 @@
 #include "lista.hh"
 #include "stos.hh"
 #include "kolejka.hh"
-
+#include "QSTest.hh"
 /*! \mainpage 
  *
  *	\section Dokumentacja Dokumentacja klas w repozytorium pamsi.
