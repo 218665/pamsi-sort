@@ -17,22 +17,28 @@ Lista<int> rozmiar;
 rozmiar.add(10);
 rozmiar.add(100);
 rozmiar.add(1000);
-rozmiar.add(1000000);
-rozmiar.add(100000000);
+rozmiar.add(10000);
+rozmiar.add(100000);
 
-QSTest bolt;
-IStoper* czas = new Stoper;
-for(int i = 0; i < rozmiar.size(); ++i)
-  std::cout << rozmiar.get(i)<<endl;
+IRunnable* bolt = new QSTest;
+//IRunnable* bolt = new MSTest;
+ IStoper* czas = new Stoper;
+ for(int i = 0; i < rozmiar.size(); ++i)
+   std::cout << rozmiar.get(i)<<endl;
 
-for( int i=0; i <3; ++i)
-  {
-bolt.prepare(rozmiar.get(i));
-czas->start();
-if(bolt.run())
-  czas->stop();
-dumpToFile("Wyniki", rozmiar.get(i), czas);
-}
+ for( int i=0; i <rozmiar.size(); ++i)
+   {
+     for(int j=0; j<10; ++j)
+       {
+	 bolt->prepare(rozmiar.get(i));
+	 czas->start();
+	 //bolt.wypisz();
+	 if(bolt->run())
+	   czas->stop();
+	 //bolt.wypisz();
+	 dumpToFile("pesym3.csv", rozmiar.get(i), czas);
+       }
+   }
 //Mój kod 
 
 //Szablon projektu
@@ -82,10 +88,10 @@ dumpToFile("Wyniki", rozmiar.get(i), czas);
 //--------------------------------------------------------------------------------------
 
 void dumpToFile (string nameOfFile, unsigned int testsize, IStoper * stoper) {
-fstream file;
-file.open(nameOfFile);
-if (file.good(), ios::app) {
-file << to_string(testsize) << "";
+ofstream file;
+ file.open(nameOfFile,ios::app);
+if (file.good()) {
+file << to_string(testsize) << ",";
 file << to_string(stoper->getElapsedTimeMs()) << endl;
 }
  else {
