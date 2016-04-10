@@ -10,10 +10,11 @@ private:
   void mergeSort(int left, int right);
   bool isCorrect();
   void merge(int, int, int);
+  void wypisz();
 public:
   virtual bool prepare (int size);
   virtual bool run ();
-  void wypisz();
+
 };
 
 #endif 
